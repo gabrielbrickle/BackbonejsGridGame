@@ -1,12 +1,59 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-let gameRouter = require('./router');
+let MoveModel = require('./models/movement');
+///three views
+let MoveView = require('./views/movement');
+let UserView = require('./views/users');
+let gameOverView = require('./views/gameover');
 
-window.addEventListener('load', function () {
-    let router = new gameRouter();
-    Backbone.history.start();
-});
+module.exports= Backbone.Router.extend({
+            initialize: function() {
+                this.movementmodel = new MoveModel();
 
-},{"./router":3}],2:[function(require,module,exports){
+                this.move = new MoveView({
+                    model: this.movementmodel,
+                    el: document.getElementById('game-view'),
+                });
+
+                this.user = new UserView({
+                    model: this.movementmodel,
+                    el: document.getElementById('user-info'),
+                });
+                this.gameOver = new gameOverView({
+                    model: this.movementmodel,
+                    el: document.getElementById('game-over'),
+                });
+            },
+            routes: {
+                'default': '',
+                'play': 'currentGame',
+                'login': 'loginPage',
+                'gameover': 'gameOverPage',
+            },
+
+            gameOverPage: function() {
+                // if (this.movementmodel.get('userEnergy') === 23) {///////
+                console.log("i'm in the game over page");
+                this.gameOver.el.classList.remove('hidden');
+                this.user.el.classList.add('hidden');
+                this.move.el.classList.add('hidden');
+              // }
+            },
+            currentGame: function() {
+                console.log("i'm in the game play page");
+                this.move.el.classList.remove('hidden');
+                this.user.el.classList.add('hidden');
+                this.gameOver.el.classList.add('hidden');
+            },
+            loginPage: function() {
+                console.log("i'm in the login page");
+                this.user.el.classList.remove('hidden');
+                this.gameOver.el.classList.add('hidden');
+                this.move.el.classList.add('hidden');
+            },
+
+        });
+
+},{"./models/movement":2,"./views/gameover":3,"./views/movement":4,"./views/users":5}],2:[function(require,module,exports){
 module.exports = Backbone.Model.extend({
     defaults: {
         upDownNumber: 0,
@@ -75,61 +122,6 @@ module.exports = Backbone.Model.extend({
 });
 
 },{}],3:[function(require,module,exports){
-let MoveModel = require('./models/movement');
-///three views
-let MoveView = require('./views/movement');
-let UserView = require('./views/users');
-let gameOverView = require('./views/gameover');
-
-module.exports= Backbone.Router.extend({
-            initialize: function() {
-                this.movementmodel = new MoveModel();
-
-                this.move = new MoveView({
-                    model: this.movementmodel,
-                    el: document.getElementById('game-view'),
-                });
-
-                this.user = new UserView({
-                    model: this.movementmodel,
-                    el: document.getElementById('user-info'),
-                });
-                this.gameOver = new gameOverView({
-                    model: this.movementmodel,
-                    el: document.getElementById('game-over'),
-                });
-            },
-            routes: {
-                'default': '',
-                'play': 'currentGame',
-                'login': 'loginPage',
-                'gameover': 'gameOverPage',
-            },
-
-            gameOverPage: function() {
-                // if (this.movementmodel.get('userEnergy') === 23) {///////
-                console.log("i'm in the game over page");
-                this.gameOver.el.classList.remove('hidden');
-                this.user.el.classList.add('hidden');
-                this.move.el.classList.add('hidden');
-              // }
-            },
-            currentGame: function() {
-                console.log("i'm in the game play page");
-                this.move.el.classList.remove('hidden');
-                this.user.el.classList.add('hidden');
-                this.gameOver.el.classList.add('hidden');
-            },
-            loginPage: function() {
-                console.log("i'm in the login page");
-                this.user.el.classList.remove('hidden');
-                this.gameOver.el.classList.add('hidden');
-                this.move.el.classList.add('hidden');
-            },
-
-        });
-
-},{"./models/movement":2,"./views/gameover":4,"./views/movement":5,"./views/users":6}],4:[function(require,module,exports){
 module.exports = Backbone.View.extend({
     initialize: function() {
         this.model.on('change', this.render, this);
@@ -144,7 +136,7 @@ module.exports = Backbone.View.extend({
     },
 });
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 
 module.exports = Backbone.View.extend({
     initialize: function() {
@@ -201,7 +193,7 @@ module.exports = Backbone.View.extend({
     }
 });
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = Backbone.View.extend({
     initialize: function() {
         this.model.on('change', this.render, this);

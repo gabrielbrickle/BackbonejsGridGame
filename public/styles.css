@@ -12,3 +12,6 @@ button {
 
 body {
   background-color: #A9D26A; }
+
+.hidden {
+  display: none; }

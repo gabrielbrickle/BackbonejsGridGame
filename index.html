@@ -8,20 +8,18 @@
 </head>
 
 <body>
-    <!-- <h2>Grid Game</h2>
-    <a href="#login">Login</a>
-    <a href="#play">Play</a>-->
+    <h2>Grid Game</h2>
+    <a href="#login" id="login">Login</a>
+    <a href="#play" id="play">Play</a>
     <section id="user-info">
-        <h3>LOGIN HERE</h3>
-        <input type="text" name="name" placeholder="username" id="input">
+        <input type="text" name="name" placeholder="username" id="input"><br>
         <button id="smallplayer">Small Player</button>
-        <button id="bigplayer">Big Player</button>
+        <button id="bigplayer">Big Player</button><br>
         <button id="start">START</button>
         <div id="newuser">-</div>
     </section>
 
     <section id="game-view">
-        <h3>PLAY HERE</h3>
         <button id="up"> MOVE UP </button>
         <button id="down"> MOVE DOWN </button>
         <button id="left"> MOVE LEFT </button>
@@ -32,7 +30,7 @@
         <div id="movecount">-</div>
     </section>
 
-    <section class="game-over">
+    <section id="game-over">
       <h2>Game Over</h2>
       <button id="restart">Start Over</button>
     </section>

@@ -9,8 +9,9 @@ module.exports = Backbone.View.extend({
         'click #down': 'clickDown',
         'click #left': 'clickLeft',
         'click #right': 'clickRight',
+
     },
-    //////this.model.up ---- up is defined in model so that it count up +1 every time the below click function happens
+    //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
         this.model.up();
     },
@@ -22,6 +23,9 @@ module.exports = Backbone.View.extend({
     },
     clickRight: function() {
         this.model.right();
+    },
+    clickRestart: function() {
+        this.model.restart();
     },
     /////render function makes it so that #upxy changes from "-" to whatever number is
     render: function() {
@@ -42,6 +46,10 @@ module.exports = Backbone.View.extend({
         rightbutton.textContent = this.model.get('leftRightNumber');
         // rightbutton.innerHTML = `The song is ${this.model.right()}`;
 
+      let anybuttonclick = this.el.querySelector('#movecount');
+        anybuttonclick.textContent = `Move Count: ${this.model.get('userClickCount')}`;
 
+      let energycount = this.el.querySelector('#energy');
+      energycount.textContent = `Energy Level: ${this.model.get('userEnergy')}`;
     }
 });
