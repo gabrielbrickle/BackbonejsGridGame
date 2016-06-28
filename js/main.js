@@ -7,7 +7,7 @@ window.addEventListener('load', function () {
 
     let move = new MoveView({
         model: movementmodel,
-        el: document.getElementById('game-buttons'),
+        el: document.getElementById('game-view'),
     });
 
     let user = new UserView({
