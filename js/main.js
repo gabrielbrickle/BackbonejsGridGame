@@ -1,8 +1,6 @@
-
 let MoveModel = require('./models/movement');
 let MoveView = require('./views/movement');
-let UserView = require('./views/user');
-let UserModel = require('./models/user');
+let UserView = require('./views/users');
 
 window.addEventListener('load', function () {
     let movementmodel = new MoveModel();
@@ -12,11 +10,11 @@ window.addEventListener('load', function () {
         el: document.getElementById('game-buttons'),
     });
 
-    let usermodel = new UserModel({
-    });
-
     let user = new UserView({
-        model: usermodel,
+        model: movementmodel,
         el: document.getElementById('user-info'),
     });
+    //     // let router = new userRouter({
+    //     //   Backbone.history.start();
+    //     // });
 });

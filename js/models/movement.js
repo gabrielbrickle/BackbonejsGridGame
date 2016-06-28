@@ -4,6 +4,8 @@ module.exports = Backbone.Model.extend({
         // downNumber: 0,
         leftRightNumber: 0,
         // rightNumber: 0
+        userName: "gabe"
+
     },
     up: function() {
       if (this.get('upDownNumber') < 10) {
@@ -24,5 +26,8 @@ module.exports = Backbone.Model.extend({
       if (this.get('leftRightNumber') < 10) {
         this.set('leftRightNumber', this.get('leftRightNumber') + 1)
         }
-    }
+    },
+    start: function(userval) {
+        this.set('userName', userval)
+    },
 });

@@ -1,9 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
 let MoveModel = require('./models/movement');
 let MoveView = require('./views/movement');
-let UserView = require('./views/user');
-let UserModel = require('./models/user');
+let UserView = require('./views/users');
 
 window.addEventListener('load', function () {
     let movementmodel = new MoveModel();
@@ -13,22 +11,24 @@ window.addEventListener('load', function () {
         el: document.getElementById('game-buttons'),
     });
 
-    let usermodel = new UserModel({
-    });
-
     let user = new UserView({
-        model: usermodel,
+        model: movementmodel,
         el: document.getElementById('user-info'),
     });
+    //     // let router = new userRouter({
+    //     //   Backbone.history.start();
+    //     // });
 });
 
-},{"./models/movement":2,"./models/user":3,"./views/movement":4,"./views/user":5}],2:[function(require,module,exports){
+},{"./models/movement":2,"./views/movement":3,"./views/users":4}],2:[function(require,module,exports){
 module.exports = Backbone.Model.extend({
     defaults: {
         upDownNumber: 0,
         // downNumber: 0,
         leftRightNumber: 0,
         // rightNumber: 0
+        userName: "gabe"
+
     },
     up: function() {
       if (this.get('upDownNumber') < 10) {
@@ -49,20 +49,14 @@ module.exports = Backbone.Model.extend({
       if (this.get('leftRightNumber') < 10) {
         this.set('leftRightNumber', this.get('leftRightNumber') + 1)
         }
-    }
-});
-
-},{}],3:[function(require,module,exports){
-module.exports = Backbone.Model.extend({
-    defaults: {
-        userName: "gabe"
     },
     start: function(userval) {
         this.set('userName', userval)
-    }
+    },
 });
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
+
 module.exports = Backbone.View.extend({
     initialize: function() {
       this.model.on('change', this.render, this);
@@ -110,7 +104,7 @@ module.exports = Backbone.View.extend({
     }
 });
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = Backbone.View.extend({
     initialize: function() {
         ////on a change of the page, do this
