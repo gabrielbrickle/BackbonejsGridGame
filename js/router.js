@@ -17,6 +17,10 @@ module.exports= Backbone.Router.extend({
                     model: this.movementmodel,
                     el: document.getElementById('user-info'),
                 });
+                ////FROM CLASS
+                // this.user.on('startover', function(){
+                //   this.navigate('gameover',{trigger: true});
+                // }, this);
                 this.gameOver = new gameOverView({
                     model: this.movementmodel,
                     el: document.getElementById('game-over'),

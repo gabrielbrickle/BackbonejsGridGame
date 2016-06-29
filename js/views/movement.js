@@ -31,20 +31,15 @@ module.exports = Backbone.View.extend({
     render: function() {
       let upbutton = this.el.querySelector('#yaxis');
         upbutton.textContent = this.model.get('upDownNumber');
-        // upbutton.innerHTML = `The song is ${this.model.up()}`;
 
       let downbutton = this.el.querySelector('#yaxis');
         downbutton.textContent = this.model.get('upDownNumber');
-        // downbutton.innerHTML = `The song is ${this.model.down()}`;
 
       let leftbutton = this.el.querySelector('#xaxis');
         leftbutton.textContent = this.model.get('leftRightNumber');
-        // leftbutton.innerHTML = `The song is ${this.model.left()}`;
-
 
       let rightbutton = this.el.querySelector('#xaxis');
         rightbutton.textContent = this.model.get('leftRightNumber');
-        // rightbutton.innerHTML = `The song is ${this.model.right()}`;
 
       let anybuttonclick = this.el.querySelector('#movecount');
         anybuttonclick.textContent = `Move Count: ${this.model.get('userClickCount')}`;

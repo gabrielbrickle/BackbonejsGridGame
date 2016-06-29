@@ -9,5 +9,10 @@ module.exports = Backbone.View.extend({
     clickRestart: function() {
       console.log('restart');
         this.model.restart();
+        // this.trigger('startover', this.model);//////FROM CLASS
     },
 });
+
+
+
+// going to need function to trigger game over event

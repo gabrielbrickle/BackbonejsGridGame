@@ -18,7 +18,6 @@ module.exports = Backbone.Model.extend({
             this.set('upDownNumber', this.get('upDownNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
     down: function() {
@@ -32,7 +31,6 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('upDownNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
 
@@ -45,7 +43,6 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
     right: function() {
@@ -58,7 +55,6 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
     ///sets the username to what is typed into the input field
@@ -78,11 +74,11 @@ module.exports = Backbone.Model.extend({
       // if (userEnergy === 90) {
       //   console.log('restart');
       // }
-        // this.set('upDownNumber', this.get('upDownNumber') === 0)
-        // this.set('leftRightNumber', this.get('leftRightNumber') === 0)
-        // this.set('userClickCount', this.get('userClickCount') === 0)
-        // this.set('userEnergy', this.get('userEnergy') === 0)
-
+        // this.set('upDownNumber', 0)
+        // this.set('leftRightNumber',0)
+        // this.set('userClickCount',0)
+        // this.set('userEnergy', 0)
+        // this.trigger('startover');//////FROM CLASS
     },
 
 });
