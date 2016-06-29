@@ -11,8 +11,14 @@ module.exports = Backbone.View.extend({
         'click #bigplayer': 'clickBig',
     },
     clickStart: function() {
+      console.log('clicked start');
         let userval = document.getElementById('input').value;
         this.model.start(userval);
+        // 'An event just happened'.
+        this.trigger('play', this);
+
+
+
     },
     clickLogin: function() {
         console.log('i clicked login');
@@ -23,10 +29,14 @@ module.exports = Backbone.View.extend({
     clickBig: function() {
         let char = document.getElementById('bigplayer').value;
         this.model.bigcharselect(char);
+        this.trigger('created', this.model);/////NEW
+
     },
     clickSmall: function() {
         let char = document.getElementById('smallplayer').value;
         this.model.smallcharselect(char);
+        this.trigger('created', this.model);//////NEW
+
     },
     render: function() {
         let newName = this.el.querySelector('#newuser');

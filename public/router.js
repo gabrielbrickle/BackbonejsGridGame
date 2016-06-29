@@ -1,69 +1,97 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 let MoveModel = require('./models/movement');
-///three views
 let MoveView = require('./views/movement');
 let UserView = require('./views/users');
 let gameOverView = require('./views/gameover');
 
-module.exports= Backbone.Router.extend({
-            initialize: function() {
-                this.movementmodel = new MoveModel();
+module.exports = Backbone.Router.extend({
+    initialize: function() {
+        this.movementmodel = new MoveModel();
 
-                this.move = new MoveView({
-                    model: this.movementmodel,
-                    el: document.getElementById('game-view'),
-                });
-
-                this.user = new UserView({
-                    model: this.movementmodel,
-                    el: document.getElementById('user-info'),
-                });
-                ////FROM CLASS
-                // this.user.on('startover', function(){
-                //   this.navigate('gameover',{trigger: true});
-                // }, this);
-                this.gameOver = new gameOverView({
-                    model: this.movementmodel,
-                    el: document.getElementById('game-over'),
-                });
-            },
-            routes: {
-                'default': '',
-                'play': 'currentGame',
-                'login': 'loginPage',
-                'gameover': 'gameOverPage',
-            },
-
-            gameOverPage: function() {
-                // if (this.movementmodel.get('userEnergy') === 23) {///////
-                console.log("i'm in the game over page");
-                this.gameOver.el.classList.remove('hidden');
-                this.user.el.classList.add('hidden');
-                this.move.el.classList.add('hidden');
-              // }
-            },
-            currentGame: function() {
-                console.log("i'm in the game play page");
-                this.move.el.classList.remove('hidden');
-                this.user.el.classList.add('hidden');
-                this.gameOver.el.classList.add('hidden');
-            },
-            loginPage: function() {
-                console.log("i'm in the login page");
-                this.user.el.classList.remove('hidden');
-                this.gameOver.el.classList.add('hidden');
-                this.move.el.classList.add('hidden');
-            },
-
+        this.move = new MoveView({
+            model: this.movementmodel,
+            el: document.getElementById('game-view'),
         });
+
+        this.user = new UserView({
+            model: this.movementmodel,
+            el: document.getElementById('user-info'),
+        });
+
+        this.movementmodel.on('endgame', function (model) {
+            console.log(`${model.get('userEnergy')}`);
+            this.navigate(`gameover`, { trigger: true });
+        }, this);
+
+        this.movementmodel.on('startover', function (model) {
+            console.log('going to the login, bye');
+            this.navigate(`login`, { trigger: true });
+        }, this);
+
+        this.user.on('play', function (model) {
+            this.navigate(`playgame`, { trigger: true });
+        }, this);
+
+        this.gameOver = new gameOverView({
+            model: this.movementmodel,
+            el: document.getElementById('game-over'),
+        });
+    },
+    routes: {
+        'default': '',
+        'playgame': 'currentGame',
+        'login': 'loginPage',
+        'gameover': 'gameOverPage',
+    },
+
+    gameOverPage: function() {
+        console.log("i'm in the game over page");
+        this.gameOver.el.classList.remove('hidden');
+        this.user.el.classList.add('hidden');
+        this.move.el.classList.add('hidden');
+    },
+    currentGame: function() {
+        console.log("i'm in the game play page");
+        this.move.el.classList.remove('hidden');
+        this.user.el.classList.add('hidden');
+        this.gameOver.el.classList.add('hidden');
+    },
+    loginPage: function() {////need to pass in who
+        // if (who === null) {
+        //     this.navigate('login', {
+        //         trigger: true
+        //     });
+        //     return;
+        // }
+        // let peperson = this;
+        //
+        // let gameUser = new UserModel();
+        // internetPerson.fetch({
+        //     url: `http://localhost:8000/api/players/${who}`,////WILL CHANGE
+        //     success: function () {
+        //         person.loginPage.model = internetPerson;
+        //         person.loginPage.render();
+        //     },
+        // });
+
+        // console.log('show user route for ' + who);
+        console.log("i'm in the login page");
+        this.user.el.classList.remove('hidden');
+        this.gameOver.el.classList.add('hidden');
+        this.move.el.classList.add('hidden');
+    },
+
+});
 
 },{"./models/movement":2,"./views/gameover":3,"./views/movement":4,"./views/users":5}],2:[function(require,module,exports){
 module.exports = Backbone.Model.extend({
+    // url: '',
+
     defaults: {
         upDownNumber: 0,
         leftRightNumber: 0,
         userName: "gabe",
-        userEnergy: 100,
+        userEnergy: 10,
         userClickCount: 0,
         characterSize: "na",
     },
@@ -79,6 +107,10 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
+        if (this.get('userEnergy') <= 0){
+          console.log('out of energy');
+          this.trigger('endgame', this);
+        }
     },
     down: function() {
         if (this.get('upDownNumber') > -10 && this.get('characterSize') === 'Big') {
@@ -92,6 +124,10 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
+        if (this.get('userEnergy') <= 0){
+          console.log('out of energy');
+          this.trigger('endgame', this);
+        }
     },
 
     left: function() {
@@ -103,6 +139,10 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
+        }
+        if (this.get('userEnergy') <= 0){
+          console.log('out of energy');
+          this.trigger('endgame', this)
         }
     },
     right: function() {
@@ -116,29 +156,43 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
+        if (this.get('userEnergy') <= 0){
+          console.log('out of energy');
+          this.trigger('endgame', this)
+        }
     },
     ///sets the username to what is typed into the input field
     start: function(userval) {
+      if (this.get('userName') === ''){
+        console.log('no name');
+      }
         this.set('userName', userval)
+        console.log('calling start save()');
+
+        // this.save();//////////POST REQUEST
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
-        this.set('userEnergy', 150)
+        this.set('userEnergy', 15)
         console.log(this.get('characterSize'));
+        console.log('calling big save()');
+
+        // this.save();
+
     },
     smallcharselect: function(char) {
         this.set('characterSize', char)
         console.log(this.get('characterSize'));
+        console.log('calling small save()');
+
+        // this.save();
     },
     restart: function() {
-      // if (userEnergy === 90) {
-      //   console.log('restart');
-      // }
-        // this.set('upDownNumber', 0)
-        // this.set('leftRightNumber',0)
-        // this.set('userClickCount',0)
-        // this.set('userEnergy', 0)
-        // this.trigger('startover');//////FROM CLASS
+        this.set('upDownNumber', 0)
+        this.set('leftRightNumber',0)
+        this.set('userClickCount',0)
+        this.set('userEnergy', 10)//////will it work based on charsize
+        this.trigger('startover');
     },
 
 });
@@ -157,6 +211,9 @@ module.exports = Backbone.View.extend({
         this.model.restart();
         // this.trigger('startover', this.model);//////FROM CLASS
     },
+    render: function(){
+      
+    }
 });
 
 
@@ -217,6 +274,7 @@ module.exports = Backbone.View.extend({
 
 },{}],5:[function(require,module,exports){
 module.exports = Backbone.View.extend({
+
     initialize: function() {
         this.model.on('change', this.render, this);
     },
@@ -228,8 +286,14 @@ module.exports = Backbone.View.extend({
         'click #bigplayer': 'clickBig',
     },
     clickStart: function() {
+      console.log('clicked start');
         let userval = document.getElementById('input').value;
         this.model.start(userval);
+        // 'An event just happened'.
+        this.trigger('play', this);
+
+
+
     },
     clickLogin: function() {
         console.log('i clicked login');
@@ -240,10 +304,14 @@ module.exports = Backbone.View.extend({
     clickBig: function() {
         let char = document.getElementById('bigplayer').value;
         this.model.bigcharselect(char);
+        this.trigger('created', this.model);/////NEW
+
     },
     clickSmall: function() {
         let char = document.getElementById('smallplayer').value;
         this.model.smallcharselect(char);
+        this.trigger('created', this.model);//////NEW
+
     },
     render: function() {
         let newName = this.el.querySelector('#newuser');
