@@ -17,58 +17,80 @@ module.exports = Backbone.Model.extend({
         characterSize: "na",
     },
     up: function() {
-        if (this.get('upDownNumber') < 10) {
+        if (this.get('upDownNumber') < 10 && this.get('characterSize') === 'Big') {
             this.set('upDownNumber', this.get('upDownNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 8)
+            this.set('userEnergy', this.get('userEnergy') - 2)
 
             console.log(this.get('userClickCount'));
+        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') < 10) {
+            this.set('upDownNumber', this.get('upDownNumber') + 1)
+            this.set('userClickCount', this.get('userClickCount') + 1)
+            this.set('userEnergy', this.get('userEnergy') - 1)
+            console.log('double points');
         }
     },
     down: function() {
-        if (this.get('upDownNumber') > -10) {
+        if (this.get('upDownNumber') > -10 && this.get('characterSize') === 'Big') {
             this.set('upDownNumber', this.get('upDownNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 4)
+            this.set('userEnergy', this.get('userEnergy') - 2)
 
             console.log(this.get('userClickCount'));
+        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') < 10) {
+            this.set('leftRightNumber', this.get('upDownNumber') + 1)
+            this.set('userClickCount', this.get('userClickCount') + 1)
+            this.set('userEnergy', this.get('userEnergy') - 1)
+            console.log('double points');
         }
     },
 
     left: function() {
-        if (this.get('leftRightNumber') > -10) {
+        if (this.get('leftRightNumber') > -10 && this.get('characterSize') === 'Big') {
             this.set('leftRightNumber', this.get('leftRightNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 11)
-
+            this.set('userEnergy', this.get('userEnergy') - 2)
+        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') < 10) {
+            this.set('leftRightNumber', this.get('leftRightNumber') + 1)
+            this.set('userClickCount', this.get('userClickCount') + 1)
+            this.set('userEnergy', this.get('userEnergy') - 1)
+            console.log('double points');
         }
     },
     right: function() {
-        if (this.get('leftRightNumber') < 10) {
+        if (this.get('leftRightNumber') < 10 && this.get('characterSize') === 'Big') {
+            console.log('itworked!');
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 20)
-
+            this.set('userEnergy', this.get('userEnergy') - 2)
+        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') < 10) {
+            this.set('leftRightNumber', this.get('leftRightNumber') + 1)
+            this.set('userClickCount', this.get('userClickCount') + 1)
+            this.set('userEnergy', this.get('userEnergy') - 1)
+            console.log('double points');
         }
     },
+    ///sets the username to what is typed into the input field
     start: function(userval) {
         this.set('userName', userval)
     },
-    bigcharselect: function() {
-      
-        this.set('characterSize', this.get('characterSize'))
-        console.log(this.get('characterSize'));//////null right now
+    bigcharselect: function(char) {
+        this.set('characterSize', char)
+        this.set('userEnergy', 150)
+        console.log(this.get('characterSize'));
     },
-    smallcharselect: function() {
-        this.set('characterSize', this.get('characterSize'))
-        console.log(this.get('characterSize'));//////null right now
+    smallcharselect: function(char) {
+        this.set('characterSize', char)
+        console.log(this.get('characterSize'));
     },
     restart: function() {
-      console.log('restart');
-      // this.set('upDownNumber', this.get('upDownNumber') === 0)
-      // this.set('leftRightNumber', this.get('leftRightNumber') === 0)
-      // this.set('userClickCount', this.get('userClickCount') === 0)
-      // this.set('userEnergy', this.get('userEnergy') === 0)
+      // if (userEnergy === 90) {
+      //   console.log('restart');
+      // }
+        // this.set('upDownNumber', this.get('upDownNumber') === 0)
+        // this.set('leftRightNumber', this.get('leftRightNumber') === 0)
+        // this.set('userClickCount', this.get('userClickCount') === 0)
+        // this.set('userEnergy', this.get('userEnergy') === 0)
 
     },
 
@@ -156,7 +178,7 @@ module.exports = Backbone.View.extend({
         'click #down': 'clickDown',
         'click #left': 'clickLeft',
         'click #right': 'clickRight',
-
+        'click #restart': 'clickRestart',
     },
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
@@ -208,35 +230,29 @@ module.exports = Backbone.View.extend({
     },
     events: {
         'click #start': 'clickStart',
-        'click #smallplayer': 'clickSmall',
-        'click #bigplayer': 'clickBig',
         'click #login': 'clickLogin',
         'click #play': 'clickPlay',
+        'click #smallplayer': 'clickSmall',
+        'click #bigplayer': 'clickBig',
     },
     clickStart: function() {
-        /////.start is coming from user models start function which get input box value and .....
         let userval = document.getElementById('input').value;
         this.model.start(userval);
     },
     clickLogin: function() {
-      console.log('i clicked login');
-
-        /////.start is coming from user models start function which get input box value and .....
+        console.log('i clicked login');
     },
     clickPlay: function() {
-      console.log('i clicked play');
-
-        /////.start is coming from user models start function which get input box value and .....
-    },
-    clickSmall: function() {
-        let char = document.getElementById('smallplayer');
-        this.model.smallcharselect(char);
-
+        console.log('i clicked play');
     },
     clickBig: function() {
-            let char = document.getElementById('bigplayer');
-            this.model.bigcharselect(char);
-        },
+        let char = document.getElementById('bigplayer').value;
+        this.model.bigcharselect(char);
+    },
+    clickSmall: function() {
+        let char = document.getElementById('smallplayer').value;
+        this.model.smallcharselect(char);
+    },
     render: function() {
         let newName = this.el.querySelector('#newuser');
         newName.textContent = `Welcome, ${this.model.get('userName')}`;

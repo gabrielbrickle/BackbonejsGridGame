@@ -9,7 +9,7 @@ module.exports = Backbone.View.extend({
         'click #down': 'clickDown',
         'click #left': 'clickLeft',
         'click #right': 'clickRight',
-
+        'click #restart': 'clickRestart',
     },
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {

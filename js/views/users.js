@@ -4,35 +4,29 @@ module.exports = Backbone.View.extend({
     },
     events: {
         'click #start': 'clickStart',
-        'click #smallplayer': 'clickSmall',
-        'click #bigplayer': 'clickBig',
         'click #login': 'clickLogin',
         'click #play': 'clickPlay',
+        'click #smallplayer': 'clickSmall',
+        'click #bigplayer': 'clickBig',
     },
     clickStart: function() {
-        /////.start is coming from user models start function which get input box value and .....
         let userval = document.getElementById('input').value;
         this.model.start(userval);
     },
     clickLogin: function() {
-      console.log('i clicked login');
-
-        /////.start is coming from user models start function which get input box value and .....
+        console.log('i clicked login');
     },
     clickPlay: function() {
-      console.log('i clicked play');
-
-        /////.start is coming from user models start function which get input box value and .....
-    },
-    clickSmall: function() {
-        let char = document.getElementById('smallplayer');
-        this.model.smallcharselect(char);
-
+        console.log('i clicked play');
     },
     clickBig: function() {
-            let char = document.getElementById('bigplayer');
-            this.model.bigcharselect(char);
-        },
+        let char = document.getElementById('bigplayer').value;
+        this.model.bigcharselect(char);
+    },
+    clickSmall: function() {
+        let char = document.getElementById('smallplayer').value;
+        this.model.smallcharselect(char);
+    },
     render: function() {
         let newName = this.el.querySelector('#newuser');
         newName.textContent = `Welcome, ${this.model.get('userName')}`;
