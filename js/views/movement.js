@@ -14,15 +14,21 @@ module.exports = Backbone.View.extend({
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
         this.model.up();
+        this.model.scoreIncrease();
     },
     clickDown: function() {
         this.model.down();
+        this.model.scoreIncrease();
+
     },
     clickLeft: function() {
         this.model.left();
+        this.model.scoreIncrease();
+
     },
     clickRight: function() {
         this.model.right();
+        this.model.scoreIncrease();
     },
     clickRestart: function() {
         this.model.restart();

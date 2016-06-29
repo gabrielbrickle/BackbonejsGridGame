@@ -25,7 +25,6 @@ module.exports = Backbone.Router.extend({
         }, this);
 
         this.movementmodel.on('startover', function(model) {
-            console.log('going to the login, bye');
             this.navigate(`login`, {
                 trigger: true
             });
@@ -50,36 +49,33 @@ module.exports = Backbone.Router.extend({
     },
 
     gameOverPage: function() {
-        console.log("i'm in the game over page");
         this.gameOver.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
     },
     currentGame: function() {
-        console.log("i'm in the game play page");
         this.move.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.gameOver.el.classList.add('hidden');
     },
     loginPage: function(who) {
-        if (who === null) {
-            this.navigate('login', {
-                trigger: true
-            });
-            return;
-        }
-        let person = this;
-        let gameUser = new UserModel();
-        internetPerson.fetch({
-            url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
-            success: function () {
-                person.loginPage.model = internetPerson;
-                person.loginPage.render();
-            },
-        });
+        // if (who === null) {
+        //     this.navigate('login', {
+        //         trigger: true
+        //     });
+        //     return;
+        // }
+        // let person = this;
+        // let gameUser = new UserModel();
+        // internetPerson.fetch({
+        //     url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
+        //     success: function () {
+        //         person.loginPage.model = internetPerson;
+        //         person.loginPage.render();
+        //     },
+        // });
 
         console.log('show user route for ' + who);
-        console.log("i'm in the login page");
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');
         this.move.el.classList.add('hidden');

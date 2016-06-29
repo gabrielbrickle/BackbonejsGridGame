@@ -66,7 +66,6 @@ module.exports = Backbone.Model.extend({
     },
     right: function() {
         if (this.get('leftRightNumber') < 10 && this.get('characterSize') === 'Big') {
-            console.log('itworked!');
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 2)
@@ -76,10 +75,22 @@ module.exports = Backbone.Model.extend({
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
         if (this.get('userEnergy') <= 0) {
-            console.log('out of energy');
             this.trigger('endgame', this);
             this.save();
 
+        }
+    },
+
+    scoreIncrease: function() {
+        if (this.get('leftRightNumber') === 3) {
+            console.log('youre at 3 left right');
+            this.set('userEnergy', this.get('userEnergy') + 2);
+        } else if (this.get('upDownNumber') === 3) {
+            this.set('userEnergy', this.get('userEnergy') + 4);
+        } else if (this.get('upDownNumber') === -2) {
+            this.set('userEnergy', this.get('userEnergy') - 4);
+        } else if (this.get('upDownNumber') === 9) {
+            this.set('userEnergy', this.get('userEnergy') - 20);
         }
     },
     ///sets the username to what is typed into the input field
@@ -92,7 +103,6 @@ module.exports = Backbone.Model.extend({
         // this.set('userClickCount', 0)
         // this.set('userEnergy', 10) //////will it work based on charsize
 
-        //////////POST REQUEST
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
@@ -100,18 +110,14 @@ module.exports = Backbone.Model.extend({
         console.log(this.get('characterSize'));
         console.log('calling big save()');
 
-        // this.save();
-
     },
     smallcharselect: function(char) {
         this.set('characterSize', char)
         console.log(this.get('characterSize'));
         console.log('calling small save()');
 
-        // this.save();
     },
     restart: function() {
-
         this.trigger('startover');
 
     },
@@ -119,7 +125,6 @@ module.exports = Backbone.Model.extend({
         this.set('userName', userName)
         this.set('characterSize', characterSize)
         this.set('userClickCount', userClickCount)
-            // this.save();
     }
 
 });

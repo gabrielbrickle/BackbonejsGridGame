@@ -75,7 +75,6 @@ module.exports = Backbone.Model.extend({
     },
     right: function() {
         if (this.get('leftRightNumber') < 10 && this.get('characterSize') === 'Big') {
-            console.log('itworked!');
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 2)
@@ -85,10 +84,22 @@ module.exports = Backbone.Model.extend({
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
         if (this.get('userEnergy') <= 0) {
-            console.log('out of energy');
             this.trigger('endgame', this);
             this.save();
 
+        }
+    },
+
+    scoreIncrease: function() {
+        if (this.get('leftRightNumber') === 3) {
+            console.log('youre at 3 left right');
+            this.set('userEnergy', this.get('userEnergy') + 2);
+        } else if (this.get('upDownNumber') === 3) {
+            this.set('userEnergy', this.get('userEnergy') + 4);
+        } else if (this.get('upDownNumber') === -2) {
+            this.set('userEnergy', this.get('userEnergy') - 4);
+        } else if (this.get('upDownNumber') === 9) {
+            this.set('userEnergy', this.get('userEnergy') - 20);
         }
     },
     ///sets the username to what is typed into the input field
@@ -101,7 +112,6 @@ module.exports = Backbone.Model.extend({
         // this.set('userClickCount', 0)
         // this.set('userEnergy', 10) //////will it work based on charsize
 
-        //////////POST REQUEST
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
@@ -109,18 +119,14 @@ module.exports = Backbone.Model.extend({
         console.log(this.get('characterSize'));
         console.log('calling big save()');
 
-        // this.save();
-
     },
     smallcharselect: function(char) {
         this.set('characterSize', char)
         console.log(this.get('characterSize'));
         console.log('calling small save()');
 
-        // this.save();
     },
     restart: function() {
-
         this.trigger('startover');
 
     },
@@ -128,7 +134,6 @@ module.exports = Backbone.Model.extend({
         this.set('userName', userName)
         this.set('characterSize', characterSize)
         this.set('userClickCount', userClickCount)
-            // this.save();
     }
 
 });
@@ -161,7 +166,6 @@ module.exports = Backbone.Router.extend({
         }, this);
 
         this.movementmodel.on('startover', function(model) {
-            console.log('going to the login, bye');
             this.navigate(`login`, {
                 trigger: true
             });
@@ -186,36 +190,33 @@ module.exports = Backbone.Router.extend({
     },
 
     gameOverPage: function() {
-        console.log("i'm in the game over page");
         this.gameOver.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
     },
     currentGame: function() {
-        console.log("i'm in the game play page");
         this.move.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.gameOver.el.classList.add('hidden');
     },
     loginPage: function(who) {
-        if (who === null) {
-            this.navigate('login', {
-                trigger: true
-            });
-            return;
-        }
-        let person = this;
-        let gameUser = new UserModel();
-        internetPerson.fetch({
-            url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
-            success: function () {
-                person.loginPage.model = internetPerson;
-                person.loginPage.render();
-            },
-        });
+        // if (who === null) {
+        //     this.navigate('login', {
+        //         trigger: true
+        //     });
+        //     return;
+        // }
+        // let person = this;
+        // let gameUser = new UserModel();
+        // internetPerson.fetch({
+        //     url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
+        //     success: function () {
+        //         person.loginPage.model = internetPerson;
+        //         person.loginPage.render();
+        //     },
+        // });
 
         console.log('show user route for ' + who);
-        console.log("i'm in the login page");
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
@@ -229,26 +230,24 @@ module.exports = Backbone.View.extend({
         this.model.on('change', this.render, this);
     },
     events: {
-      'click #restart': 'clickRestart',
+        'click #restart': 'clickRestart',
     },
-
     clickRestart: function() {
-      console.log('restart');
+        console.log('restart');
         this.model.restart();
-        // this.trigger('startover', this.model);//////FROM CLASS
     },
     render: function() {
         let newName = this.el.querySelector('#newuser');
         newName.textContent = `Ya Lost, ${this.model.get('userName')}`;
 
         let finalScore = this.el.querySelector('#scoreboard');
-        finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`
+        finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`;
+
+        // let topPlayers = this.el.querySelector('#topplayers');
+        // topPlayers.textContent= `High Scores`
+        ///will be userName + userClickCount of top 5 users
     },
 });
-
-
-
-// going to need function to trigger game over event
 
 },{}],5:[function(require,module,exports){
 
@@ -267,15 +266,21 @@ module.exports = Backbone.View.extend({
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
         this.model.up();
+        this.model.scoreIncrease();
     },
     clickDown: function() {
         this.model.down();
+        this.model.scoreIncrease();
+
     },
     clickLeft: function() {
         this.model.left();
+        this.model.scoreIncrease();
+
     },
     clickRight: function() {
         this.model.right();
+        this.model.scoreIncrease();
     },
     clickRestart: function() {
         this.model.restart();
@@ -323,8 +328,6 @@ module.exports = Backbone.View.extend({
         // 'An event just happened'.
         this.trigger('play', this);
 
-
-
     },
     clickLogin: function() {
         console.log('i clicked login');
@@ -335,19 +338,16 @@ module.exports = Backbone.View.extend({
     clickBig: function() {
         let char = document.getElementById('bigplayer').value;
         this.model.bigcharselect(char);
-        this.trigger('created', this.model);/////NEW
+        this.trigger('created', this.model); /////NEW
 
     },
     clickSmall: function() {
         let char = document.getElementById('smallplayer').value;
         this.model.smallcharselect(char);
-        this.trigger('created', this.model);//////NEW
+        this.trigger('created', this.model); //////NEW
 
     },
-    // render: function() {
-    //     let newName = this.el.querySelector('#newuser');
-    //     newName.textContent = `Welcome, ${this.model.get('userName')}`;
-    // },
+
 });
 
 },{}]},{},[1])

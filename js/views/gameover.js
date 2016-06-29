@@ -3,23 +3,21 @@ module.exports = Backbone.View.extend({
         this.model.on('change', this.render, this);
     },
     events: {
-      'click #restart': 'clickRestart',
+        'click #restart': 'clickRestart',
     },
-
     clickRestart: function() {
-      console.log('restart');
+        console.log('restart');
         this.model.restart();
-        // this.trigger('startover', this.model);//////FROM CLASS
     },
     render: function() {
         let newName = this.el.querySelector('#newuser');
         newName.textContent = `Ya Lost, ${this.model.get('userName')}`;
 
         let finalScore = this.el.querySelector('#scoreboard');
-        finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`
+        finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`;
+
+        // let topPlayers = this.el.querySelector('#topplayers');
+        // topPlayers.textContent= `High Scores`
+        ///will be userName + userClickCount of top 5 users
     },
 });
-
-
-
-// going to need function to trigger game over event

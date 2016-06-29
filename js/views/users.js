@@ -18,8 +18,6 @@ module.exports = Backbone.View.extend({
         // 'An event just happened'.
         this.trigger('play', this);
 
-
-
     },
     clickLogin: function() {
         console.log('i clicked login');
@@ -30,17 +28,14 @@ module.exports = Backbone.View.extend({
     clickBig: function() {
         let char = document.getElementById('bigplayer').value;
         this.model.bigcharselect(char);
-        this.trigger('created', this.model);/////NEW
+        this.trigger('created', this.model); /////NEW
 
     },
     clickSmall: function() {
         let char = document.getElementById('smallplayer').value;
         this.model.smallcharselect(char);
-        this.trigger('created', this.model);//////NEW
+        this.trigger('created', this.model); //////NEW
 
     },
-    // render: function() {
-    //     let newName = this.el.querySelector('#newuser');
-    //     newName.textContent = `Welcome, ${this.model.get('userName')}`;
-    // },
+
 });
