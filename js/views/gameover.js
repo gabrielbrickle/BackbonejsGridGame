@@ -11,6 +11,9 @@ module.exports = Backbone.View.extend({
         this.model.restart();
         // this.trigger('startover', this.model);//////FROM CLASS
     },
+    render: function(){
+      
+    }
 });
 
 

@@ -1,5 +1,7 @@
 module.exports = Backbone.Model.extend({
-    defaults: {
+    url: ''
+
+        defaults: {
         upDownNumber: 0,
         leftRightNumber: 0,
         userName: "gabe",
@@ -60,6 +62,8 @@ module.exports = Backbone.Model.extend({
     ///sets the username to what is typed into the input field
     start: function(userval) {
         this.set('userName', userval)
+        console.log('calling save()');
+        this.save();//////////PUT REQUEST
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
@@ -71,9 +75,9 @@ module.exports = Backbone.Model.extend({
         console.log(this.get('characterSize'));
     },
     restart: function() {
-      // if (userEnergy === 90) {
-      //   console.log('restart');
-      // }
+        // if (userEnergy === 90) {
+        //   console.log('restart');
+        // }
         // this.set('upDownNumber', 0)
         // this.set('leftRightNumber',0)
         // this.set('userClickCount',0)

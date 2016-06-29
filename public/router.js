@@ -18,6 +18,10 @@ module.exports= Backbone.Router.extend({
                     model: this.movementmodel,
                     el: document.getElementById('user-info'),
                 });
+                ////FROM CLASS
+                // this.user.on('startover', function(){
+                //   this.navigate('gameover',{trigger: true});
+                // }, this);
                 this.gameOver = new gameOverView({
                     model: this.movementmodel,
                     el: document.getElementById('game-over'),
@@ -74,7 +78,6 @@ module.exports = Backbone.Model.extend({
             this.set('upDownNumber', this.get('upDownNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
     down: function() {
@@ -88,7 +91,6 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('upDownNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
 
@@ -101,7 +103,6 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
     right: function() {
@@ -114,7 +115,6 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
-            console.log('double points');
         }
     },
     ///sets the username to what is typed into the input field
@@ -134,11 +134,11 @@ module.exports = Backbone.Model.extend({
       // if (userEnergy === 90) {
       //   console.log('restart');
       // }
-        // this.set('upDownNumber', this.get('upDownNumber') === 0)
-        // this.set('leftRightNumber', this.get('leftRightNumber') === 0)
-        // this.set('userClickCount', this.get('userClickCount') === 0)
-        // this.set('userEnergy', this.get('userEnergy') === 0)
-
+        // this.set('upDownNumber', 0)
+        // this.set('leftRightNumber',0)
+        // this.set('userClickCount',0)
+        // this.set('userEnergy', 0)
+        // this.trigger('startover');//////FROM CLASS
     },
 
 });
@@ -155,8 +155,13 @@ module.exports = Backbone.View.extend({
     clickRestart: function() {
       console.log('restart');
         this.model.restart();
+        // this.trigger('startover', this.model);//////FROM CLASS
     },
 });
+
+
+
+// going to need function to trigger game over event
 
 },{}],4:[function(require,module,exports){
 
@@ -192,20 +197,15 @@ module.exports = Backbone.View.extend({
     render: function() {
       let upbutton = this.el.querySelector('#yaxis');
         upbutton.textContent = this.model.get('upDownNumber');
-        // upbutton.innerHTML = `The song is ${this.model.up()}`;
 
       let downbutton = this.el.querySelector('#yaxis');
         downbutton.textContent = this.model.get('upDownNumber');
-        // downbutton.innerHTML = `The song is ${this.model.down()}`;
 
       let leftbutton = this.el.querySelector('#xaxis');
         leftbutton.textContent = this.model.get('leftRightNumber');
-        // leftbutton.innerHTML = `The song is ${this.model.left()}`;
-
 
       let rightbutton = this.el.querySelector('#xaxis');
         rightbutton.textContent = this.model.get('leftRightNumber');
-        // rightbutton.innerHTML = `The song is ${this.model.right()}`;
 
       let anybuttonclick = this.el.querySelector('#movecount');
         anybuttonclick.textContent = `Move Count: ${this.model.get('userClickCount')}`;
