@@ -1,5 +1,5 @@
 module.exports = Backbone.Model.extend({
-    // url: '',
+    url: 'http://tiny-tiny.herokuapp.com/collections/gridgame',
 
     defaults: {
         upDownNumber: 0,
@@ -21,9 +21,10 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this);
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
         }
     },
     down: function() {
@@ -33,14 +34,16 @@ module.exports = Backbone.Model.extend({
             this.set('userEnergy', this.get('userEnergy') - 2)
 
             console.log(this.get('userClickCount'));
-        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') < 10) {
-            this.set('leftRightNumber', this.get('upDownNumber') + 1)
+        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') > -10) {
+            this.set('upDownNumber', this.get('upDownNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this);
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
+
         }
     },
 
@@ -49,14 +52,16 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 2)
-        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') < 10) {
-            this.set('leftRightNumber', this.get('leftRightNumber') + 1)
+        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') > -10) {
+            this.set('leftRightNumber', this.get('leftRightNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this)
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
+
         }
     },
     right: function() {
@@ -70,20 +75,24 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this)
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
+
         }
     },
     ///sets the username to what is typed into the input field
     start: function(userval) {
-      if (this.get('userName') === ''){
-        console.log('no name');
-      }
-        this.set('userName', userval)
-        console.log('calling start save()');
+        this.set('userName', userval);
 
-        // this.save();//////////POST REQUEST
+        // console.log('calling start save()');
+        // this.set('upDownNumber', 0)
+        // this.set('leftRightNumber', 0)
+        // this.set('userClickCount', 0)
+        // this.set('userEnergy', 10) //////will it work based on charsize
+
+        //////////POST REQUEST
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
@@ -102,11 +111,15 @@ module.exports = Backbone.Model.extend({
         // this.save();
     },
     restart: function() {
-        this.set('upDownNumber', 0)
-        this.set('leftRightNumber',0)
-        this.set('userClickCount',0)
-        this.set('userEnergy', 10)//////will it work based on charsize
+
         this.trigger('startover');
+
     },
+    send: function(userName, userClickCount, characterSize) {
+        this.set('userName', userName)
+        this.set('characterSize', characterSize)
+        this.set('userClickCount', userClickCount)
+            // this.save();
+    }
 
 });

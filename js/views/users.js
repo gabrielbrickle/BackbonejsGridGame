@@ -11,8 +11,9 @@ module.exports = Backbone.View.extend({
         'click #bigplayer': 'clickBig',
     },
     clickStart: function() {
-      console.log('clicked start');
+
         let userval = document.getElementById('input').value;
+        console.log('clicked start', userval);
         this.model.start(userval);
         // 'An event just happened'.
         this.trigger('play', this);
@@ -38,8 +39,8 @@ module.exports = Backbone.View.extend({
         this.trigger('created', this.model);//////NEW
 
     },
-    render: function() {
-        let newName = this.el.querySelector('#newuser');
-        newName.textContent = `Welcome, ${this.model.get('userName')}`;
-    },
+    // render: function() {
+    //     let newName = this.el.querySelector('#newuser');
+    //     newName.textContent = `Welcome, ${this.model.get('userName')}`;
+    // },
 });

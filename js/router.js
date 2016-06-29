@@ -17,18 +17,24 @@ module.exports = Backbone.Router.extend({
             el: document.getElementById('user-info'),
         });
 
-        this.movementmodel.on('endgame', function (model) {
+        this.movementmodel.on('endgame', function(model) {
             console.log(`${model.get('userEnergy')}`);
-            this.navigate(`gameover`, { trigger: true });
+            this.navigate(`gameover`, {
+                trigger: true
+            });
         }, this);
 
-        this.movementmodel.on('startover', function (model) {
+        this.movementmodel.on('startover', function(model) {
             console.log('going to the login, bye');
-            this.navigate(`login`, { trigger: true });
+            this.navigate(`login`, {
+                trigger: true
+            });
         }, this);
 
-        this.user.on('play', function (model) {
-            this.navigate(`playgame`, { trigger: true });
+        this.user.on('play', function(model) {
+            this.navigate(`playgame`, {
+                trigger: true
+            });
         }, this);
 
         this.gameOver = new gameOverView({
@@ -55,25 +61,24 @@ module.exports = Backbone.Router.extend({
         this.user.el.classList.add('hidden');
         this.gameOver.el.classList.add('hidden');
     },
-    loginPage: function() {////need to pass in who
-        // if (who === null) {
-        //     this.navigate('login', {
-        //         trigger: true
-        //     });
-        //     return;
-        // }
-        // let peperson = this;
-        //
-        // let gameUser = new UserModel();
-        // internetPerson.fetch({
-        //     url: `http://localhost:8000/api/players/${who}`,////WILL CHANGE
-        //     success: function () {
-        //         person.loginPage.model = internetPerson;
-        //         person.loginPage.render();
-        //     },
-        // });
+    loginPage: function(who) {
+        if (who === null) {
+            this.navigate('login', {
+                trigger: true
+            });
+            return;
+        }
+        let person = this;
+        let gameUser = new UserModel();
+        internetPerson.fetch({
+            url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
+            success: function () {
+                person.loginPage.model = internetPerson;
+                person.loginPage.render();
+            },
+        });
 
-        // console.log('show user route for ' + who);
+        console.log('show user route for ' + who);
         console.log("i'm in the login page");
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');

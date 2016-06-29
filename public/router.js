@@ -18,18 +18,24 @@ module.exports = Backbone.Router.extend({
             el: document.getElementById('user-info'),
         });
 
-        this.movementmodel.on('endgame', function (model) {
+        this.movementmodel.on('endgame', function(model) {
             console.log(`${model.get('userEnergy')}`);
-            this.navigate(`gameover`, { trigger: true });
+            this.navigate(`gameover`, {
+                trigger: true
+            });
         }, this);
 
-        this.movementmodel.on('startover', function (model) {
+        this.movementmodel.on('startover', function(model) {
             console.log('going to the login, bye');
-            this.navigate(`login`, { trigger: true });
+            this.navigate(`login`, {
+                trigger: true
+            });
         }, this);
 
-        this.user.on('play', function (model) {
-            this.navigate(`playgame`, { trigger: true });
+        this.user.on('play', function(model) {
+            this.navigate(`playgame`, {
+                trigger: true
+            });
         }, this);
 
         this.gameOver = new gameOverView({
@@ -56,25 +62,24 @@ module.exports = Backbone.Router.extend({
         this.user.el.classList.add('hidden');
         this.gameOver.el.classList.add('hidden');
     },
-    loginPage: function() {////need to pass in who
-        // if (who === null) {
-        //     this.navigate('login', {
-        //         trigger: true
-        //     });
-        //     return;
-        // }
-        // let peperson = this;
-        //
-        // let gameUser = new UserModel();
-        // internetPerson.fetch({
-        //     url: `http://localhost:8000/api/players/${who}`,////WILL CHANGE
-        //     success: function () {
-        //         person.loginPage.model = internetPerson;
-        //         person.loginPage.render();
-        //     },
-        // });
+    loginPage: function(who) {
+        if (who === null) {
+            this.navigate('login', {
+                trigger: true
+            });
+            return;
+        }
+        let person = this;
+        let gameUser = new UserModel();
+        internetPerson.fetch({
+            url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
+            success: function () {
+                person.loginPage.model = internetPerson;
+                person.loginPage.render();
+            },
+        });
 
-        // console.log('show user route for ' + who);
+        console.log('show user route for ' + who);
         console.log("i'm in the login page");
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');
@@ -85,7 +90,7 @@ module.exports = Backbone.Router.extend({
 
 },{"./models/movement":2,"./views/gameover":3,"./views/movement":4,"./views/users":5}],2:[function(require,module,exports){
 module.exports = Backbone.Model.extend({
-    // url: '',
+    url: 'http://tiny-tiny.herokuapp.com/collections/gridgame',
 
     defaults: {
         upDownNumber: 0,
@@ -107,9 +112,10 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this);
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
         }
     },
     down: function() {
@@ -119,14 +125,16 @@ module.exports = Backbone.Model.extend({
             this.set('userEnergy', this.get('userEnergy') - 2)
 
             console.log(this.get('userClickCount'));
-        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') < 10) {
-            this.set('leftRightNumber', this.get('upDownNumber') + 1)
+        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') > -10) {
+            this.set('upDownNumber', this.get('upDownNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this);
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
+
         }
     },
 
@@ -135,14 +143,16 @@ module.exports = Backbone.Model.extend({
             this.set('leftRightNumber', this.get('leftRightNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 2)
-        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') < 10) {
-            this.set('leftRightNumber', this.get('leftRightNumber') + 1)
+        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') > -10) {
+            this.set('leftRightNumber', this.get('leftRightNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this)
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
+
         }
     },
     right: function() {
@@ -156,20 +166,24 @@ module.exports = Backbone.Model.extend({
             this.set('userClickCount', this.get('userClickCount') + 1)
             this.set('userEnergy', this.get('userEnergy') - 1)
         }
-        if (this.get('userEnergy') <= 0){
-          console.log('out of energy');
-          this.trigger('endgame', this)
+        if (this.get('userEnergy') <= 0) {
+            console.log('out of energy');
+            this.trigger('endgame', this);
+            this.save();
+
         }
     },
     ///sets the username to what is typed into the input field
     start: function(userval) {
-      if (this.get('userName') === ''){
-        console.log('no name');
-      }
-        this.set('userName', userval)
-        console.log('calling start save()');
+        this.set('userName', userval);
 
-        // this.save();//////////POST REQUEST
+        // console.log('calling start save()');
+        // this.set('upDownNumber', 0)
+        // this.set('leftRightNumber', 0)
+        // this.set('userClickCount', 0)
+        // this.set('userEnergy', 10) //////will it work based on charsize
+
+        //////////POST REQUEST
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
@@ -188,12 +202,16 @@ module.exports = Backbone.Model.extend({
         // this.save();
     },
     restart: function() {
-        this.set('upDownNumber', 0)
-        this.set('leftRightNumber',0)
-        this.set('userClickCount',0)
-        this.set('userEnergy', 10)//////will it work based on charsize
+
         this.trigger('startover');
+
     },
+    send: function(userName, userClickCount, characterSize) {
+        this.set('userName', userName)
+        this.set('characterSize', characterSize)
+        this.set('userClickCount', userClickCount)
+            // this.save();
+    }
 
 });
 
@@ -211,9 +229,13 @@ module.exports = Backbone.View.extend({
         this.model.restart();
         // this.trigger('startover', this.model);//////FROM CLASS
     },
-    render: function(){
-      
-    }
+    render: function() {
+        let newName = this.el.querySelector('#newuser');
+        newName.textContent = `Ya Lost, ${this.model.get('userName')}`;
+
+        let finalScore = this.el.querySelector('#scoreboard');
+        finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`
+    },
 });
 
 
@@ -286,8 +308,9 @@ module.exports = Backbone.View.extend({
         'click #bigplayer': 'clickBig',
     },
     clickStart: function() {
-      console.log('clicked start');
+
         let userval = document.getElementById('input').value;
+        console.log('clicked start', userval);
         this.model.start(userval);
         // 'An event just happened'.
         this.trigger('play', this);
@@ -313,10 +336,10 @@ module.exports = Backbone.View.extend({
         this.trigger('created', this.model);//////NEW
 
     },
-    render: function() {
-        let newName = this.el.querySelector('#newuser');
-        newName.textContent = `Welcome, ${this.model.get('userName')}`;
-    },
+    // render: function() {
+    //     let newName = this.el.querySelector('#newuser');
+    //     newName.textContent = `Welcome, ${this.model.get('userName')}`;
+    // },
 });
 
 },{}]},{},[1])

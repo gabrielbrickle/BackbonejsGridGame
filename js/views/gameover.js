@@ -11,9 +11,13 @@ module.exports = Backbone.View.extend({
         this.model.restart();
         // this.trigger('startover', this.model);//////FROM CLASS
     },
-    render: function(){
-      
-    }
+    render: function() {
+        let newName = this.el.querySelector('#newuser');
+        newName.textContent = `Ya Lost, ${this.model.get('userName')}`;
+
+        let finalScore = this.el.querySelector('#scoreboard');
+        finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`
+    },
 });
 
 
