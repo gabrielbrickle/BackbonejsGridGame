@@ -61,17 +61,15 @@ module.exports = Backbone.Router.extend({
     },
     loginPage: function(who) {
         // if (who === null) {
-        //     this.navigate('login', {
-        //         trigger: true
-        //     });
-        //     return;
-        // }
+        //       this.navigate('login', { trigger: true });
+        //       return;
+        //   }
         // let person = this;
-        // let gameUser = new UserModel();
-        // internetPerson.fetch({
-        //     url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
+        // let gameUser = new MoveModel();
+        // gameUser.fetch({
+        //     url: `http://tiny-tiny.herokuapp.com/collections/gridgame`,////WILL CHANGE
         //     success: function () {
-        //         person.loginPage.model = internetPerson;
+        //         person.loginPage.model = gameUser;
         //         person.loginPage.render();
         //     },
         // });
@@ -169,27 +167,20 @@ module.exports = Backbone.Model.extend({
     },
 
     scoreIncrease: function() {
-        if (this.get('leftRightNumber') === 3) {
+        if (this.get('leftRightNumber') === 1) {
             console.log('youre at 3 left right');
             this.set('userEnergy', this.get('userEnergy') + 2);
-        } else if (this.get('upDownNumber') === 3) {
+        } else if (this.get('upDownNumber') === 1) {
             this.set('userEnergy', this.get('userEnergy') + 4);
         } else if (this.get('upDownNumber') === -2) {
             this.set('userEnergy', this.get('userEnergy') - 4);
         } else if (this.get('upDownNumber') === 9) {
-            this.set('userEnergy', this.get('userEnergy') - 20);
+            this.set('userEnergy', this.get('userEnergy') - 2);
         }
     },
-    ///sets the username to what is typed into the input field
+    /////need to figure out how to zero out everything and still use above functions
     start: function(userval) {
         this.set('userName', userval);
-
-        // console.log('calling start save()');
-        // this.set('upDownNumber', 0)
-        // this.set('leftRightNumber', 0)
-        // this.set('userClickCount', 0)
-        // this.set('userEnergy', 10) //////will it work based on charsize
-
     },
     bigcharselect: function(char) {
         this.set('characterSize', char)
@@ -205,14 +196,14 @@ module.exports = Backbone.Model.extend({
 
     },
     restart: function() {
+
         this.trigger('startover');
+        this.clear({
+            silent: true
+        });
+        this.set(this.defaults);
 
     },
-    send: function(userName, userClickCount, characterSize) {
-        this.set('userName', userName)
-        this.set('characterSize', characterSize)
-        this.set('userClickCount', userClickCount)
-    }
 
 });
 

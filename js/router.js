@@ -60,17 +60,15 @@ module.exports = Backbone.Router.extend({
     },
     loginPage: function(who) {
         // if (who === null) {
-        //     this.navigate('login', {
-        //         trigger: true
-        //     });
-        //     return;
-        // }
+        //       this.navigate('login', { trigger: true });
+        //       return;
+        //   }
         // let person = this;
-        // let gameUser = new UserModel();
-        // internetPerson.fetch({
-        //     url: `http://grid.queencityiron.com/api/players`,////WILL CHANGE
+        // let gameUser = new MoveModel();
+        // gameUser.fetch({
+        //     url: `http://tiny-tiny.herokuapp.com/collections/gridgame`,////WILL CHANGE
         //     success: function () {
-        //         person.loginPage.model = internetPerson;
+        //         person.loginPage.model = gameUser;
         //         person.loginPage.render();
         //     },
         // });

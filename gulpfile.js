@@ -25,7 +25,7 @@ gulp.task('js', function(){
     .pipe(gulp.dest('./public'))
 });
 
-gulp.task('watch', function(){ //npm install gulp-watch
+gulp.task('watch', function(){
   gulp.watch('./sass/*.scss', ['css']);
   gulp.watch('./index.html', ['html']);
   gulp.watch('./js/*.js', ['js']);

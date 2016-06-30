@@ -1,5 +1,4 @@
 #yaxis, #xaxis {
-  // color: blue;
   font-size: 25px;
 }
 button {
@@ -10,4 +9,26 @@ button {
 #game-buttons {
   width: 50%;
   margin-right: -100px;
+}
+#user-info {
+  margin-left: 25%;
+  margin-right: 25%;
+}
+#game-view {
+  margin-left: 25%;
+  margin-right: 25%;
+}
+#game-over {
+  margin-left: 25%;
+  margin-right: 25%;
+  h2 {
+    font-size: 70px;
+  }
+}
+.homebuttons {
+  margin-left: 35%;
+  margin-right: 25%;
+}
+#start {
+  margin-left: 25%;
 }

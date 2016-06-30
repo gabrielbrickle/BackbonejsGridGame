@@ -10,8 +10,41 @@ button {
   width: 50%;
   margin-right: -100px; }
 
+#user-info {
+  margin-left: 25%;
+  margin-right: 25%; }
+
+#game-view {
+  margin-left: 25%;
+  margin-right: 25%; }
+
+#game-over {
+  margin-left: 25%;
+  margin-right: 25%; }
+  #game-over h2 {
+    font-size: 70px; }
+
+.homebuttons {
+  margin-left: 35%;
+  margin-right: 25%; }
+
+#start {
+  margin-left: 25%; }
+
 body {
-  background-color: #A9D26A; }
+  background-color: #fff; }
+
+h2 {
+  margin-top: 0px;
+  text-align: center;
+  font-size: 55px;
+  font-family: 'Sigmar One', cursive;
+  text-shadow: 2px 2px #ff0000; }
 
 .hidden {
   display: none; }
+
+#input {
+  width: 100%;
+  font-size: 20px;
+  text-align: center; }
