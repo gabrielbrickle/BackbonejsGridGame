@@ -7,6 +7,7 @@ module.exports = Backbone.Router.extend({
     initialize: function() {
         this.movementmodel = new MoveModel();
 
+
         this.move = new MoveView({
             model: this.movementmodel,
             el: document.getElementById('game-view'),
@@ -49,6 +50,14 @@ module.exports = Backbone.Router.extend({
     },
 
     gameOverPage: function() {
+      // let grabscore = new HighScoreCollection({
+      //        grabscore.fetch({
+      //            success: function() {
+      //                console.log('got the scores');
+      //            }
+      //        })
+      //    })
+
         this.gameOver.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
@@ -60,21 +69,8 @@ module.exports = Backbone.Router.extend({
         this.gameOver.el.classList.add('hidden');
     },
     loginPage: function(who) {
-        // if (who === null) {
-        //       this.navigate('login', { trigger: true });
-        //       return;
-        //   }
-        // let person = this;
-        // let gameUser = new MoveModel();
-        // gameUser.fetch({
-        //     url: `http://tiny-tiny.herokuapp.com/collections/gridgame`,////WILL CHANGE
-        //     success: function () {
-        //         person.loginPage.model = gameUser;
-        //         person.loginPage.render();
-        //     },
-        // });
-
-        console.log('show user route for ' + who);
+        this.movementmodel.getUser();
+        
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');
         this.move.el.classList.add('hidden');

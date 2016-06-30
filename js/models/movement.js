@@ -1,9 +1,11 @@
 let HighScore = require('./highscore');
-// let PlayerType = require('./playertype');
-
-
+let PlayerType = require('./player');
+let PlayerTypeCollection = require('./player.collection');
 
 module.exports = Backbone.Model.extend({
+  initialize: function(){
+    this.playertype = new PlayerTypeCollection();
+  },
     defaults: {
         upDownNumber: 0,
         leftRightNumber: 0,
@@ -12,7 +14,7 @@ module.exports = Backbone.Model.extend({
         userClickCount: 0,
         characterSize: "na",
     },
-    up: function() {
+    upright: function() {
         if (this.get('upDownNumber') < 10 && this.get('characterSize') === 'Big') {
             this.set('upDownNumber', this.get('upDownNumber') + 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
@@ -27,30 +29,11 @@ module.exports = Backbone.Model.extend({
         if (this.get('userEnergy') <= 0) {
             console.log('out of energy');
             this.trigger('endgame', this);
-            this.save();
-        }
-    },
-    down: function() {
-        if (this.get('upDownNumber') > -10 && this.get('characterSize') === 'Big') {
-            this.set('upDownNumber', this.get('upDownNumber') - 1)
-            this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 2)
-
-            console.log(this.get('userClickCount'));
-        } else if (this.get('characterSize') === 'Small' && this.get('upDownNumber') > -10) {
-            this.set('upDownNumber', this.get('upDownNumber') - 1)
-            this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 1)
-        }
-        if (this.get('userEnergy') <= 0) {
-            console.log('out of energy');
-            this.trigger('endgame', this);
-            this.save();
-
+            // this.save();
         }
     },
 
-    left: function() {
+    leftdown: function() {
         if (this.get('leftRightNumber') > -10 && this.get('characterSize') === 'Big') {
             this.set('leftRightNumber', this.get('leftRightNumber') - 1)
             this.set('userClickCount', this.get('userClickCount') + 1)
@@ -63,23 +46,7 @@ module.exports = Backbone.Model.extend({
         if (this.get('userEnergy') <= 0) {
             console.log('out of energy');
             this.trigger('endgame', this);
-            this.save();
-
-        }
-    },
-    right: function() {
-        if (this.get('leftRightNumber') < 10 && this.get('characterSize') === 'Big') {
-            this.set('leftRightNumber', this.get('leftRightNumber') + 1)
-            this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 2)
-        } else if (this.get('characterSize') === 'Small' && this.get('leftRightNumber') < 10) {
-            this.set('leftRightNumber', this.get('leftRightNumber') + 1)
-            this.set('userClickCount', this.get('userClickCount') + 1)
-            this.set('userEnergy', this.get('userEnergy') - 1)
-        }
-        if (this.get('userEnergy') <= 0) {
-            this.trigger('endgame', this);
-            this.save();
+            // this.save();
 
         }
     },
@@ -96,15 +63,19 @@ module.exports = Backbone.Model.extend({
             this.set('userEnergy', this.get('userEnergy') - 2);
         }
     },
-    /////need to figure out how to zero out everything and still use above functions
+
     start: function(userval) {
         this.set('userName', userval);
     },
     bigcharselect: function(char) {
-        this.set('characterSize', char)
-        this.set('userEnergy', 15)
+        this.set('characterSize', name)
+        this.set('startingEnergy', this.get('startingEnergy'))
         console.log(this.get('characterSize'));
-        console.log('calling big save()');
+        console.log(this.playertype.startingEnergy);
+
+        // if (this.get('name') === 'small') {
+        //   this.playertype.set()
+        // }
 
     },
     smallcharselect: function(char) {
@@ -114,7 +85,6 @@ module.exports = Backbone.Model.extend({
 
     },
     restart: function() {
-
         this.trigger('startover');
         this.clear({
             silent: true
@@ -122,18 +92,37 @@ module.exports = Backbone.Model.extend({
         this.set(this.defaults);
     },
 
-    send: function() { ///sends the score to the server
-      let bestscore = new HighScore({
-        bestscore.set('userName', this.get('userName'));
-        bestscore.set('userClickCount', this.get('userClickCount'));
-        bestscore.set('characterSize', this.get('characterSize'));
-      });
-      console.log(`This is the highscore ${highscore.get.('userName')} ${highscore.get.('userClickCount')}`);
-      bestscore.save();
+    // sendScores: function() { ///sends the score to the server
+    //     let bestscore = new HighScoreCollection({
+    //         bestscore.set('userName', this.get('userName'));
+    //         bestscore.set('userClickCount', this.get('userClickCount'));
+    //         bestscore.set('characterSize', this.get('characterSize'));
+    //     });
+    //     console.log(`This is the highscore ${highscore.get.('userName')} ${highscore.get.('userClickCount')}`);
+    //     bestscore.save();
+    // },
+    ////get the scores from the serve
+    // getScores: function() {
+    //     let grabscore = new HighScore({
+    //         grabscore.fetch({
+    //             success: function() {
+    //                 console.log('got the scores');
+    //             }
+    //         })
+    //     })
+    // },
+
+    getUser: function() {
+        let that = this;
+        // this.playertype = new PlayerTypeCollection();
+        this.playertype.fetch({
+            success: function() {
+                // console.log(playertype)
+                that.playertype.trigger('gotTypes')
+
+                //////also need to add something like self.showUser.render();
+            }
+        });
     },
-////get the scores from the serve
-    // get: function(){
-    //
-    // }
 
 });

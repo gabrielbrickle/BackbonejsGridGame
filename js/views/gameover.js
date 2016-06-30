@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
         // highscores.fetch({
         //   success: function(){
         //     console.log(highscores)
-        ////////also need to add something like self.showUser.render();
+        ////////also need to add something like highscores.getScore.render();
         //   }
         // });
     },
