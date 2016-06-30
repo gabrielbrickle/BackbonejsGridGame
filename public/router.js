@@ -186,6 +186,12 @@ module.exports = Backbone.Model.extend({
         this.set(this.defaults);
     },
 
+    setPlayerType: function(){
+      this.set('name', document.getElementById('name').value);
+      this.set('characterSize', event.target.textContent);
+      console.log('set the player type');
+    },
+
     // sendScores: function() { ///sends the score to the server
     //     let bestscore = new HighScoreCollection({
     //         bestscore.set('userName', this.get('userName'));
@@ -367,6 +373,8 @@ module.exports = Backbone.View.extend({
         let char = document.getElementById('Large').value;
         console.log(event.target.textContent);
         this.model.bigcharselect(char);
+        this.model.setPlayerType();
+
         this.trigger('created', this.model);
 
     },

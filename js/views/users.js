@@ -34,6 +34,8 @@ module.exports = Backbone.View.extend({
         let char = document.getElementById('Large').value;
         console.log(event.target.textContent);
         this.model.bigcharselect(char);
+        this.model.setPlayerType();
+
         this.trigger('created', this.model);
 
     },
