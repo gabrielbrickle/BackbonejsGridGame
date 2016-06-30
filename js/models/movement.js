@@ -1,6 +1,9 @@
-module.exports = Backbone.Model.extend({
-    url: 'http://tiny-tiny.herokuapp.com/collections/gridgame',
+let HighScore = require('./highscore');
+// let PlayerType = require('./playertype');
 
+
+
+module.exports = Backbone.Model.extend({
     defaults: {
         upDownNumber: 0,
         leftRightNumber: 0,
@@ -117,7 +120,20 @@ module.exports = Backbone.Model.extend({
             silent: true
         });
         this.set(this.defaults);
-
     },
+
+    send: function() { ///sends the score to the server
+      let bestscore = new HighScore({
+        bestscore.set('userName', this.get('userName'));
+        bestscore.set('userClickCount', this.get('userClickCount'));
+        bestscore.set('characterSize', this.get('characterSize'));
+      });
+      console.log(`This is the highscore ${highscore.get.('userName')} ${highscore.get.('userClickCount')}`);
+      bestscore.save();
+    },
+////get the scores from the serve
+    // get: function(){
+    //
+    // }
 
 });

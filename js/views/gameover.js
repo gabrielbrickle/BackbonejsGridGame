@@ -16,8 +16,12 @@ module.exports = Backbone.View.extend({
         let finalScore = this.el.querySelector('#scoreboard');
         finalScore.textContent = `Your Final Score is : ${this.model.get('userClickCount')}`;
 
-        // let topPlayers = this.el.querySelector('#topplayers');
-        // topPlayers.textContent= `High Scores`
-        ///will be userName + userClickCount of top 5 users
+        // let highscores= new HighScoreCollection();
+        // highscores.fetch({
+        //   success: function(){
+        //     console.log(highscores)
+        ////////also need to add something like self.showUser.render();
+        //   }
+        // });
     },
 });

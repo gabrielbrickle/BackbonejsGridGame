@@ -52,6 +52,7 @@ module.exports = Backbone.Router.extend({
         this.gameOver.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
+
     },
     currentGame: function() {
         this.move.el.classList.remove('hidden');
