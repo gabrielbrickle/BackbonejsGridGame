@@ -301,7 +301,7 @@ module.exports = Backbone.View.extend({
         this.model.bestscore.forEach(function(element){
           let listofscores = document.createElement('li');
           renderScores.appendChild(listofscores);
-          listofscores.innerHTML =`<p>${element.get('name')}</p><p>${element.get('score')}</p><p>${element.get('playerType')}</p>`;
+          listofscores.innerHTML =`<p>Username: ${element.get('name')}</p><p>Final Score:${element.get('score')}</p><p>Player Size:${element.get('playerType')}</p>`;
 
         });
 
