@@ -19,7 +19,7 @@ module.exports = Backbone.Router.extend({
         });
 
         this.movementmodel.on('endgame', function(model) {
-            console.log(`${model.get('userEnergy')}`);
+            console.log(`${model.get('startingEnergy')}`);
             this.navigate(`gameover`, {
                 trigger: true
             });

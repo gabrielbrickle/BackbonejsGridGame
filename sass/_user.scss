@@ -6,3 +6,26 @@
     font-size: 20px;
     text-align: center;
 }
+#grid {
+  background-color: red;
+  border: solid 3px black;
+  display: block;
+}
+
+.row  {
+  display: inline-block;
+  margin: 0 auto;
+  // width: 30px;
+  // height: 30px;
+  line-height: 0;
+}
+.cell {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 0;
+  border: solid #fff 1px;
+}
+#player {
+  background-color: blue;
+}

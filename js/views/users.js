@@ -9,10 +9,7 @@ module.exports = Backbone.View.extend({
         'click #start': 'clickStart',
         'click #login': 'clickLogin',
         'click #play': 'clickPlay',
-        'click #Small': 'clickSmall',
-        'click #Large': 'clickBig',
-        // 'click #Gargantuan': 'clickBig',
-        'click button': 'clickChar'
+        'click .playersize': 'clickCharButton',
     },
     clickStart: function() {
 
@@ -30,27 +27,21 @@ module.exports = Backbone.View.extend({
     clickPlay: function() {
         console.log('i clicked play');
     },
-    clickBig: function() {
-        let char = document.getElementById('Large').value;
+    clickCharButton: function(event) {
+        let char = event.target.textContent;
         console.log(event.target.textContent);
-        this.model.bigcharselect(char);
-        this.model.setPlayerType();
+        this.model.setPlayerType(char);
 
         this.trigger('created', this.model);
-
     },
-    clickSmall: function() {
-        let char = document.getElementById('Small').value;
-        this.model.smallcharselect(char);
-        this.trigger('created', this.model);
 
-    },
     render: function(){
       let renderButtons = this.el.querySelector('#buttonrender');
       renderButtons.innerHTML = '';
       this.model.playertype.forEach(function(element){
         let newbutton = document.createElement('button');
         newbutton.id = element.get('name');
+        newbutton.classList.add('playersize');
         renderButtons.appendChild(newbutton);
         newbutton.textContent = element.get('name');
       })
