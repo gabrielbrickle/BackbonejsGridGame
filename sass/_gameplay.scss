@@ -10,6 +10,7 @@
         font-size: 70px;
         text-shadow: none;
         color: red;
+        margin-top: -105px;
     }
     h3 {
         font-size: 45px;
@@ -44,7 +45,6 @@
     border: solid 3px black;
     display: block;
     margin-left: 10px;
-
 }
 .row {
     display: inline-block;
@@ -62,8 +62,12 @@
     background-color: #d4ff2a;
 }
 #energy {
-  font-size: 20px;
+    font-size: 20px;
 }
 #energyboost {
-  background-color: red;
+    background-color: red;
+}
+#newuser,
+#scoreboard {
+    font-size: 20px;
 }

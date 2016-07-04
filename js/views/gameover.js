@@ -21,7 +21,7 @@ module.exports = Backbone.View.extend({
     },
     render: function() {
         let newName = this.el.querySelector('#newuser');
-        newName.textContent = `Ya Lost, ${this.model.get('userName')}`;
+        newName.textContent = `Username: ${this.model.get('userName')}`;
 
         let finalScore = this.el.querySelector('#scoreboard');
         finalScore.textContent = `Your Final Score is : ${this.model.get('score')}`;

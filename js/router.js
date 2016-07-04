@@ -50,14 +50,13 @@ module.exports = Backbone.Router.extend({
     },
 
     gameOverPage: function() {
-      // let grabscore = new HighScoreCollection({
-      //        grabscore.fetch({
-      //            success: function() {
-      //                console.log('got the scores');
-      //            }
-      //        })
-      //    })
-
+        // let grabscore = new HighScoreCollection({
+        //        grabscore.fetch({
+        //            success: function() {
+        //                console.log('got the scores');
+        //            }
+        //        })
+        //    })
         this.gameOver.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
@@ -70,7 +69,7 @@ module.exports = Backbone.Router.extend({
     },
     loginPage: function(who) {
         this.movementmodel.getUser();
-        
+
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');
         this.move.el.classList.add('hidden');

@@ -11,7 +11,6 @@ module.exports = Backbone.Model.extend({
         this.bestscore.fetch({
           success: function(){
             console.log(that.bestscore);
-            // bestscore.trigger('scoreload')
           }
         })
     },
@@ -60,7 +59,7 @@ module.exports = Backbone.Model.extend({
         if (this.get('startingEnergy') <= 0) {
             console.log('out of energy');
             this.trigger('endgame', this);
-            this.model.sendScores();
+            // this.model.sendScores();
 
         }
     },
@@ -77,19 +76,15 @@ module.exports = Backbone.Model.extend({
 
         }
     },
-
-    // scoreIncrease: function() {
-    //     if (this.get('xNumber') === 1) {
-    //         console.log('youre at 3 left right');
-    //         this.set('startingEnergy', this.get('startingEnergy') + 2);
-    //     } else if (this.get('yNumber') === 1) {
-    //         this.set('startingEnergy', this.get('startingEnergy') + 4);
-    //     } else if (this.get('yNumber') === -2) {
-    //         this.set('startingEnergy', this.get('startingEnergy') - 4);
-    //     } else if (this.get('yNumber') === 9) {
-    //         this.set('startingEnergy', this.get('startingEnergy') - 2);
-    //     }
-    // },
+///////RANDOM ENERGY BOOST WITH RANDOM POSITION
+    scoreIncrease: function() {
+          let num = Math.floor(Math.random()*10) + 1;
+        if (this.get('xNumber') === num || this.get('yNumber') === num) {
+            console.log('ENERGY BOOST');
+            this.set('startingEnergy', this.get('startingEnergy') + 4);
+            $('#player').css('background-color', 'red');
+          }
+    },
 
     start: function(userval) {
         this.set('userName', userval);

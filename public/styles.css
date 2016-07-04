@@ -28,7 +28,7 @@ button {
   background-color: red;
   height: 50px;
   width: 63%;
-  margin-left: 17%;
+  margin-left: 15%;
   font-family: 'Walter Turncoat', cursive; }
   #restart:hover, #start:hover {
     transform: scale(1.2); }
@@ -41,7 +41,8 @@ button {
     color: #a9a9a9;
     font-size: 16px;
     color: white;
-    font-family: 'Walter Turncoat', cursive; }
+    font-family: 'Walter Turncoat', cursive;
+    padding-right: 5px; }
 
 #Small:hover {
   transform: scale(1.1); }
@@ -100,7 +101,8 @@ body {
   #game-over h2 {
     font-size: 70px;
     text-shadow: none;
-    color: red; }
+    color: red;
+    margin-top: -105px; }
   #game-over h3 {
     font-size: 45px;
     text-align: center; }
@@ -153,3 +155,7 @@ body {
 
 #energyboost {
   background-color: red; }
+
+#newuser,
+#scoreboard {
+  font-size: 20px; }

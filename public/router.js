@@ -51,14 +51,13 @@ module.exports = Backbone.Router.extend({
     },
 
     gameOverPage: function() {
-      // let grabscore = new HighScoreCollection({
-      //        grabscore.fetch({
-      //            success: function() {
-      //                console.log('got the scores');
-      //            }
-      //        })
-      //    })
-
+        // let grabscore = new HighScoreCollection({
+        //        grabscore.fetch({
+        //            success: function() {
+        //                console.log('got the scores');
+        //            }
+        //        })
+        //    })
         this.gameOver.el.classList.remove('hidden');
         this.user.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
@@ -71,7 +70,7 @@ module.exports = Backbone.Router.extend({
     },
     loginPage: function(who) {
         this.movementmodel.getUser();
-        
+
         this.user.el.classList.remove('hidden');
         this.gameOver.el.classList.add('hidden');
         this.move.el.classList.add('hidden');
@@ -113,7 +112,6 @@ module.exports = Backbone.Model.extend({
         this.bestscore.fetch({
           success: function(){
             console.log(that.bestscore);
-            // bestscore.trigger('scoreload')
           }
         })
     },
@@ -162,7 +160,7 @@ module.exports = Backbone.Model.extend({
         if (this.get('startingEnergy') <= 0) {
             console.log('out of energy');
             this.trigger('endgame', this);
-            this.model.sendScores();
+            // this.model.sendScores();
 
         }
     },
@@ -179,19 +177,15 @@ module.exports = Backbone.Model.extend({
 
         }
     },
-
-    // scoreIncrease: function() {
-    //     if (this.get('xNumber') === 1) {
-    //         console.log('youre at 3 left right');
-    //         this.set('startingEnergy', this.get('startingEnergy') + 2);
-    //     } else if (this.get('yNumber') === 1) {
-    //         this.set('startingEnergy', this.get('startingEnergy') + 4);
-    //     } else if (this.get('yNumber') === -2) {
-    //         this.set('startingEnergy', this.get('startingEnergy') - 4);
-    //     } else if (this.get('yNumber') === 9) {
-    //         this.set('startingEnergy', this.get('startingEnergy') - 2);
-    //     }
-    // },
+///////RANDOM ENERGY BOOST WITH RANDOM POSITION
+    scoreIncrease: function() {
+          let num = Math.floor(Math.random()*10) + 1;
+        if (this.get('xNumber') === num || this.get('yNumber') === num) {
+            console.log('ENERGY BOOST');
+            this.set('startingEnergy', this.get('startingEnergy') + 4);
+            $('#player').css('background-color', 'red');
+          }
+    },
 
     start: function(userval) {
         this.set('userName', userval);
@@ -284,7 +278,7 @@ module.exports = Backbone.View.extend({
     },
     render: function() {
         let newName = this.el.querySelector('#newuser');
-        newName.textContent = `Ya Lost, ${this.model.get('userName')}`;
+        newName.textContent = `Username: ${this.model.get('userName')}`;
 
         let finalScore = this.el.querySelector('#scoreboard');
         finalScore.textContent = `Your Final Score is : ${this.model.get('score')}`;
@@ -323,21 +317,22 @@ module.exports = Backbone.View.extend({
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
         this.model.up();
-        // this.model.sendScores();
+          this.model.scoreIncrease();
     },
     clickDown: function() {
         this.model.down();
         // this.model.sendScores();
-
+          this.model.scoreIncrease();
     },
     clickLeft: function() {
         this.model.left();
         // this.model.sendScores();
-
-    },
+          this.model.scoreIncrease();
+},
     clickRight: function() {
         this.model.right();
         // this.model.sendScores();
+          this.model.scoreIncrease();
     },
     clickRestart: function() {
         this.model.restart();
@@ -357,19 +352,10 @@ module.exports = Backbone.View.extend({
                 if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan
                     cell.setAttribute('id', 'player');
                 }
-                let energyboost = document.createElement('div');
-                if (this.model.get('yNumber') === 3) {
-                  this.model.set('score', this.model.get('score') + 10);
-                    console.log('boosting');
-                    row.appendChild(energyboost);
-                    row.setAttribute('id', 'energyboost');
-                }
             }
             gridGameGrid.appendChild(row);
         }
-        // document.getElementById('grid')
     },
-    /////render function makes it so that #upxy changes from "-" to whatever number is
     render: function() {
         console.log('rendering');
         let upbutton = this.el.querySelector('#yaxis');

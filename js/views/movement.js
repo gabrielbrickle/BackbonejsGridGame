@@ -13,21 +13,22 @@ module.exports = Backbone.View.extend({
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
         this.model.up();
-        // this.model.sendScores();
+          this.model.scoreIncrease();
     },
     clickDown: function() {
         this.model.down();
         // this.model.sendScores();
-
+          this.model.scoreIncrease();
     },
     clickLeft: function() {
         this.model.left();
         // this.model.sendScores();
-
-    },
+          this.model.scoreIncrease();
+},
     clickRight: function() {
         this.model.right();
         // this.model.sendScores();
+          this.model.scoreIncrease();
     },
     clickRestart: function() {
         this.model.restart();
@@ -47,19 +48,10 @@ module.exports = Backbone.View.extend({
                 if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan
                     cell.setAttribute('id', 'player');
                 }
-                let energyboost = document.createElement('div');
-                if (this.model.get('yNumber') === 3) {
-                  this.model.set('score', this.model.get('score') + 10);
-                    console.log('boosting');
-                    row.appendChild(energyboost);
-                    row.setAttribute('id', 'energyboost');
-                }
             }
             gridGameGrid.appendChild(row);
         }
-        // document.getElementById('grid')
     },
-    /////render function makes it so that #upxy changes from "-" to whatever number is
     render: function() {
         console.log('rendering');
         let upbutton = this.el.querySelector('#yaxis');
