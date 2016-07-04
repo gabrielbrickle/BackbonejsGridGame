@@ -1,34 +1,68 @@
-#yaxis, #xaxis {
-  font-size: 25px;
-}
 button {
-  background-color: black;
-  color: #fff;
-  font-size: 15px;
+    background-color: black;
+    color: #fff;
+    font-size: 15px;
 }
 #game-buttons {
-  width: 50%;
-  margin-right: -100px;
+    width: 50%;
+    margin-right: -100px;
 }
 #user-info {
-  margin-left: 25%;
-  margin-right: 25%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 #game-view {
-  margin-left: 25%;
-  margin-right: 25%;
-}
-#game-over {
-  margin-left: 25%;
-  margin-right: 25%;
-  h2 {
-    font-size: 70px;
-  }
+    margin-left: 25%;
+    margin-right: 25%;
 }
 .homebuttons {
-  margin-left: 35%;
-  margin-right: 25%;
+    margin-left: 37%;
+    margin-right: 26%;
+    h3 {
+        font-family: 'Walter Turncoat', cursive;
+        font-size: 20px;
+        text-align: center;
+    }
 }
-#start {
-  margin-left: 25%;
+#restart, #start {
+    border-radius: 15px;
+    background-color: red;
+    height: 50px;
+    width: 63%;
+    margin-left: 17%;
+    font-family: 'Walter Turncoat', cursive;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+#buttonrender {
+    margin-left: -16px;
+    button {
+        border-radius: 15px;
+        background-color: black;
+        color: #a9a9a9;
+        font-size: 16px;
+        color: white;
+        font-family: 'Walter Turncoat', cursive;
+    }
+}
+#Small:hover {
+    transform: scale(1.1);
+}
+#Large:hover {
+    transform: scale(1.1);
+}
+#Gargantuan:hover {
+    transform: scale(1.1);
+}
+#game-view button {
+    margin-left: 10px;
+    border-radius: 15px;
+    color: white;
+    font-family: 'Walter Turncoat', cursive;
+    height: 40px;
+    width: 40%;
+}
+.playbuttons {
+    margin-left: 93px;
 }

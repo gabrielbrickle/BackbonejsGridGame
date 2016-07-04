@@ -316,10 +316,9 @@ module.exports = Backbone.View.extend({
 });
 
 },{}],9:[function(require,module,exports){
-
 module.exports = Backbone.View.extend({
     initialize: function() {
-      this.model.on('change', this.render, this);
+        this.model.on('change', this.render, this);
     },
     /////click events object for the functions listed below
     events: {
@@ -352,47 +351,54 @@ module.exports = Backbone.View.extend({
         this.model.restart();
     },
 
-    gridGenerator: function(){
-      let gridGameGrid = document.getElementById('grid');
-      gridGameGrid.innerHTML = '';
-      let size = 10;
-      for (var y = 0; y < size; y++) {
-        let row = document.createElement('div');
-        row.classList.add('row');
-        for (var x = 0; x < size; x++ ) {
-        let cell = document.createElement('div');
-        cell.classList.add('cell');
-        row.appendChild(cell);
-        if (this.model.get('yNumber') === y && this.model.get('xNumber') === x){ //////From Logan 
-          cell.setAttribute('id', 'player');
+    gridGenerator: function() {
+        let gridGameGrid = document.getElementById('grid');
+        gridGameGrid.innerHTML = '';
+        let size = 10;
+        for (var y = 0; y < size; y++) {
+            let row = document.createElement('div');
+            row.classList.add('row');
+            for (var x = 0; x < size; x++) {
+                let cell = document.createElement('div');
+                cell.classList.add('cell');
+                row.appendChild(cell);
+                if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan
+                    cell.setAttribute('id', 'player');
+                }
+                let energyboost = document.createElement('div');
+                if (this.model.get('yNumber') === 3) {
+                  this.model.set('score', this.model.get('score') + 10);
+                    console.log('boosting');
+                    row.appendChild(energyboost);
+                    row.setAttribute('id', 'energyboost');
+                }
+            }
+            gridGameGrid.appendChild(row);
         }
-      }
-      gridGameGrid.appendChild(row);
-    }
-    // document.getElementById('grid')
-  },
+        // document.getElementById('grid')
+    },
     /////render function makes it so that #upxy changes from "-" to whatever number is
     render: function() {
-      console.log('rendering');
-      let upbutton = this.el.querySelector('#yaxis');
-        upbutton.textContent = this.model.get('yNumber');
+        console.log('rendering');
+        let upbutton = this.el.querySelector('#yaxis');
+        upbutton.textContent = `${this.model.get('yNumber')}`;
 
-      let downbutton = this.el.querySelector('#yaxis');
-        downbutton.textContent = this.model.get('yNumber');
+        let downbutton = this.el.querySelector('#yaxis');
+        downbutton.textContent = `y: ${this.model.get('yNumber')}`;
 
-      let leftbutton = this.el.querySelector('#xaxis');
+        let leftbutton = this.el.querySelector('#xaxis');
         leftbutton.textContent = this.model.get('xNumber');
 
-      let rightbutton = this.el.querySelector('#xaxis');
-        rightbutton.textContent = this.model.get('xNumber');
+        let rightbutton = this.el.querySelector('#xaxis');
+        rightbutton.textContent = `x: ${this.model.get('xNumber')}`;
 
-      let anybuttonclick = this.el.querySelector('#movecount');
-        anybuttonclick.textContent = `Move Count: ${this.model.get('score')}`;
+        let anybuttonclick = this.el.querySelector('#movecount');
+        anybuttonclick.textContent = `Score: ${this.model.get('score')}`;
 
-      let energycount = this.el.querySelector('#energy');
-      energycount.textContent = `Energy Level: ${this.model.get('startingEnergy')}`;
+        let energycount = this.el.querySelector('#energy');
+        energycount.textContent = `Energy Level: ${this.model.get('startingEnergy')}`;
 
-      this.gridGenerator();
+        this.gridGenerator();
     }
 });
 

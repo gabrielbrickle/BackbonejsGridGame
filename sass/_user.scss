@@ -3,29 +3,11 @@
 }
 #input {
     width: 100%;
-    font-size: 20px;
+    font-size: 31px;
     text-align: center;
-}
-#grid {
-  background-color: red;
-  border: solid 3px black;
-  display: block;
-}
-
-.row  {
-  display: inline-block;
-  margin: 0 auto;
-  // width: 30px;
-  // height: 30px;
-  line-height: 0;
-}
-.cell {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 0;
-  border: solid #fff 1px;
-}
-#player {
-  background-color: blue;
+    border-radius: 15px;
+    margin-top: -20px;
+    background-color: #000;
+    font-family: 'Walter Turncoat', cursive;
+    color: white;
 }
