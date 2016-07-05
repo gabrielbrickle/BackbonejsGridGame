@@ -110,7 +110,7 @@ module.exports = Backbone.Model.extend({
         let num = Math.floor(Math.random() * 10) + 1;
         if (this.get('xNumber') === num || this.get('yNumber') === num) {
             console.log('ENERGY BOOST');
-            this.set('startingEnergy', this.get('startingEnergy') + 4);
+            this.set('startingEnergy', this.get('startingEnergy') + Math.floor(Math.random() * 10) + 4);
             $('#player').css('background-color', 'red');
             $('.cell').css('border-color', 'red');
             $('#energy').css('color', 'red');
