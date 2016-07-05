@@ -83,6 +83,9 @@ module.exports = Backbone.Model.extend({
             console.log('ENERGY BOOST');
             this.set('startingEnergy', this.get('startingEnergy') + 4);
             $('#player').css('background-color', 'red');
+            $('.cell').css('border-color', 'red');
+            $('#energy').css('color', 'red');
+            $('#energy').css('font-size', '20px');
           }
     },
 

@@ -184,6 +184,9 @@ module.exports = Backbone.Model.extend({
             console.log('ENERGY BOOST');
             this.set('startingEnergy', this.get('startingEnergy') + 4);
             $('#player').css('background-color', 'red');
+            $('.cell').css('border-color', 'red');
+            $('#energy').css('color', 'red');
+            $('#energy').css('font-size', '20px');
           }
     },
 
@@ -317,22 +320,22 @@ module.exports = Backbone.View.extend({
     //////modify these so that energy level and # of moves logs every time a click happens
     clickUp: function() {
         this.model.up();
-          this.model.scoreIncrease();
+        this.model.scoreIncrease();
     },
     clickDown: function() {
         this.model.down();
         // this.model.sendScores();
-          this.model.scoreIncrease();
+        this.model.scoreIncrease();
     },
     clickLeft: function() {
         this.model.left();
         // this.model.sendScores();
-          this.model.scoreIncrease();
-},
+        this.model.scoreIncrease();
+    },
     clickRight: function() {
         this.model.right();
         // this.model.sendScores();
-          this.model.scoreIncrease();
+        this.model.scoreIncrease();
     },
     clickRestart: function() {
         this.model.restart();
