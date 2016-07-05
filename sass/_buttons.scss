@@ -22,21 +22,29 @@ button {
         font-family: 'Walter Turncoat', cursive;
         font-size: 20px;
         text-align: center;
+        margin-left: -26%;
     }
 }
-#restart, #start {
+#restart,
+#start {
     border-radius: 15px;
     background-color: red;
     height: 50px;
     width: 63%;
-    margin-left: 15%;
     font-family: 'Walter Turncoat', cursive;
     &:hover {
         transform: scale(1.2);
     }
 }
+#start {
+  margin-left: 4%;
+}
+#restart {
+    margin-left: 21%;
+    margin-top: -12%;
+}
 #buttonrender {
-    margin-left: -16px;
+    margin-left: -16%;
     button {
         border-radius: 15px;
         background-color: black;
@@ -66,4 +74,6 @@ button {
 }
 .playbuttons {
     margin-left: 93px;
+    margin-top: -11%;
+
 }

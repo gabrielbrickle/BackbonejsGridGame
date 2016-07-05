@@ -21,20 +21,29 @@ button {
   .homebuttons h3 {
     font-family: 'Walter Turncoat', cursive;
     font-size: 20px;
-    text-align: center; }
+    text-align: center;
+    margin-left: -26%; }
 
-#restart, #start {
+#restart,
+#start {
   border-radius: 15px;
   background-color: red;
   height: 50px;
   width: 63%;
-  margin-left: 15%;
   font-family: 'Walter Turncoat', cursive; }
-  #restart:hover, #start:hover {
+  #restart:hover,
+  #start:hover {
     transform: scale(1.2); }
 
+#start {
+  margin-left: 4%; }
+
+#restart {
+  margin-left: 21%;
+  margin-top: -12%; }
+
 #buttonrender {
-  margin-left: -16px; }
+  margin-left: -16%; }
   #buttonrender button {
     border-radius: 15px;
     background-color: black;
@@ -62,15 +71,16 @@ button {
   width: 40%; }
 
 .playbuttons {
-  margin-left: 93px; }
+  margin-left: 93px;
+  margin-top: -11%; }
 
 h2 {
-  margin-top: 0;
   text-align: center;
   font-size: 120px;
   font-family: 'Chewy', cursive;
   text-shadow: 7px 13px #000;
-  color: #a2da2f; }
+  color: #a2da2f;
+  margin-top: -14px; }
 
 .hidden {
   display: none; }
@@ -80,7 +90,7 @@ h2 {
   font-size: 31px;
   text-align: center;
   border-radius: 15px;
-  margin-top: -20px;
+  margin-top: -22px;
   background-color: #000;
   font-family: 'Walter Turncoat', cursive;
   color: white; }
@@ -93,7 +103,9 @@ body {
 #xaxis,
 #yaxis {
   font-size: 25px;
-  text-align: center; }
+  text-align: center;
+  font-family: 'Walter Turncoat', cursive;
+  color: red; }
 
 #game-over {
   margin-left: 25%;
@@ -102,10 +114,12 @@ body {
     font-size: 70px;
     text-shadow: none;
     color: red;
-    margin-top: -105px; }
+    margin-top: -105px;
+    margin-left: 3%; }
   #game-over h3 {
     font-size: 45px;
-    text-align: center; }
+    margin-left: 3%;
+    font-family: 'Walter Turncoat', cursive; }
   #game-over ul {
     list-style-type: none;
     display: inline-flex; }
@@ -127,13 +141,15 @@ body {
   margin-right: 25px;
   margin-left: 15px;
   overflow: scroll;
-  border: solid 1px black; }
+  border: solid 1px black;
+  margin-top: -10%; }
 
 #grid {
   background-color: #000000;
   border: solid 3px black;
   display: block;
-  margin-left: 10px; }
+  margin-left: 2%;
+  border: solid 5px #a2da2f; }
 
 .row {
   display: inline-block;
@@ -145,17 +161,26 @@ body {
   width: 56px;
   height: 35px;
   line-height: 0;
-  border: solid #fff 1px; }
+  border: solid #fff 1px;
+  margin-bottom: -5px; }
 
 #player {
   background-color: #d4ff2a; }
 
-#energy {
-  font-size: 20px; }
+#energy,
+#movecount {
+  font-size: 20px;
+  font-family: 'Walter Turncoat', cursive;
+  margin-left: 72%; }
 
 #energyboost {
   background-color: red; }
 
 #newuser,
 #scoreboard {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 10%; }
+
+#highscorelist li {
   font-size: 20px; }
