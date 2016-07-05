@@ -38,9 +38,9 @@ module.exports = Backbone.Model.extend({
         let that = this;
         this.bestscore = new HighScoreCollection();
         this.bestscore.fetch({
-          success: function(){
-            console.log(that.bestscore);
-          }
+            success: function() {
+                console.log(that.bestscore);
+            }
         })
     },
     defaults: {
@@ -105,9 +105,9 @@ module.exports = Backbone.Model.extend({
 
         }
     },
-///////RANDOM ENERGY BOOST WITH RANDOM POSITION
+    ///////RANDOM ENERGY BOOST WITH RANDOM POSITION
     scoreIncrease: function() {
-          let num = Math.floor(Math.random()*10) + 1;
+        let num = Math.floor(Math.random() * 10) + 1;
         if (this.get('xNumber') === num || this.get('yNumber') === num) {
             console.log('ENERGY BOOST');
             this.set('startingEnergy', this.get('startingEnergy') + 4);
@@ -115,7 +115,7 @@ module.exports = Backbone.Model.extend({
             $('.cell').css('border-color', 'red');
             $('#energy').css('color', 'red');
             $('#energy').css('font-size', '20px');
-          }
+        }
     },
 
     start: function(userval) {
@@ -131,7 +131,7 @@ module.exports = Backbone.Model.extend({
     },
 
     setPlayerType: function(type) {
-      /////FROM RIGGAN
+        /////FROM RIGGAN
         let target = this.playertype.find(function(playertype) {
             return playertype.get('name') === type;
         });
@@ -143,13 +143,15 @@ module.exports = Backbone.Model.extend({
 
     // sendScores: function() { ///sends the score to the server
     //     // let bestscore = new HighScoreCollection;
-    //     // let that = this;
-    //         this.set('userName', this.get('userName'));
-    //         this.set('score', this.get('score'));
-    //         this.set('name', this.get('name'));
-    //
+    //     this.set('userName', 'userName');
+    //     this.set('score', 'score');
+    //     this.set('name', 'name');
+    //     //
+    //     // this.bestscore.pushScore();
     //     this.save();
+    //
     // },
+
 
     getUser: function() {
         let that = this;
@@ -278,15 +280,7 @@ module.exports = Backbone.View.extend({
         console.log('restart');
         this.model.restart();
     },
-    sendScores: function() { ///sends the score to the server
-        // let bestscore = new HighScoreCollection;
-        // let that = this;
-            this.set('userName', this.get('userName'));
-            this.set('score', this.get('score'));
-            this.set('name', this.get('name'));
 
-        this.save();
-    },
     render: function() {
         let newName = this.el.querySelector('#newuser');
         newName.textContent = `Username: ${this.model.get('userName')}`;
@@ -294,11 +288,11 @@ module.exports = Backbone.View.extend({
         let finalScore = this.el.querySelector('#scoreboard');
         finalScore.textContent = `Your Final Score is : ${this.model.get('score')}`;
 
-        let renderScores = this.el.querySelector('#highscorelist');//////////////////////////////
-        this.model.bestscore.forEach(function(element){
-          let listofscores = document.createElement('li');
-          renderScores.appendChild(listofscores);
-          listofscores.innerHTML =`<p>Username: ${element.get('name')}</p><p>Final Score:${element.get('score')}</p><p>Player Size:${element.get('playerType')}</p>`;
+        let renderScores = this.el.querySelector('#highscorelist');
+        this.model.bestscore.forEach(function(element) {
+            let listofscores = document.createElement('li');
+            renderScores.appendChild(listofscores);
+            listofscores.innerHTML = `<p>Username: ${element.get('name')}</p><p>Final Score:${element.get('score')}</p><p>Player Size:${element.get('playerType')}</p>`;
 
         });
 
@@ -360,7 +354,7 @@ module.exports = Backbone.View.extend({
                 let cell = document.createElement('div');
                 cell.classList.add('cell');
                 row.appendChild(cell);
-                if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan
+                if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan//////
                     cell.setAttribute('id', 'player');
                 }
             }

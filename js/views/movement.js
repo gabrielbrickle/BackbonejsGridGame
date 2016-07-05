@@ -45,7 +45,7 @@ module.exports = Backbone.View.extend({
                 let cell = document.createElement('div');
                 cell.classList.add('cell');
                 row.appendChild(cell);
-                if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan
+                if (this.model.get('yNumber') === y && this.model.get('xNumber') === x) { //////From Logan//////
                     cell.setAttribute('id', 'player');
                 }
             }

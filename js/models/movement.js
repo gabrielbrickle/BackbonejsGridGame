@@ -9,9 +9,9 @@ module.exports = Backbone.Model.extend({
         let that = this;
         this.bestscore = new HighScoreCollection();
         this.bestscore.fetch({
-          success: function(){
-            console.log(that.bestscore);
-          }
+            success: function() {
+                console.log(that.bestscore);
+            }
         })
     },
     defaults: {
@@ -76,9 +76,9 @@ module.exports = Backbone.Model.extend({
 
         }
     },
-///////RANDOM ENERGY BOOST WITH RANDOM POSITION
+    ///////RANDOM ENERGY BOOST WITH RANDOM POSITION
     scoreIncrease: function() {
-          let num = Math.floor(Math.random()*10) + 1;
+        let num = Math.floor(Math.random() * 10) + 1;
         if (this.get('xNumber') === num || this.get('yNumber') === num) {
             console.log('ENERGY BOOST');
             this.set('startingEnergy', this.get('startingEnergy') + 4);
@@ -86,7 +86,7 @@ module.exports = Backbone.Model.extend({
             $('.cell').css('border-color', 'red');
             $('#energy').css('color', 'red');
             $('#energy').css('font-size', '20px');
-          }
+        }
     },
 
     start: function(userval) {
@@ -102,7 +102,7 @@ module.exports = Backbone.Model.extend({
     },
 
     setPlayerType: function(type) {
-      /////FROM RIGGAN
+        /////FROM RIGGAN
         let target = this.playertype.find(function(playertype) {
             return playertype.get('name') === type;
         });
@@ -114,13 +114,15 @@ module.exports = Backbone.Model.extend({
 
     // sendScores: function() { ///sends the score to the server
     //     // let bestscore = new HighScoreCollection;
-    //     // let that = this;
-    //         this.set('userName', this.get('userName'));
-    //         this.set('score', this.get('score'));
-    //         this.set('name', this.get('name'));
-    //
+    //     this.set('userName', 'userName');
+    //     this.set('score', 'score');
+    //     this.set('name', 'name');
+    //     //
+    //     // this.bestscore.pushScore();
     //     this.save();
+    //
     // },
+
 
     getUser: function() {
         let that = this;
